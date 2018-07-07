@@ -31,7 +31,36 @@ top200dict = {"Le'Veon Bell": 'RB', 'Todd Gurley': 'RB', 'David Johnson': 'RB', 
               'DeVante Parker': 'WR', 'Randall Cobb': 'WR', 'Will Fuller V': 'WR', 'Julian Edelman': 'WR',
               'Greg Olsen': 'TE', 'Delanie Walker': 'TE', 'Evan Engram': 'TE', 'Lamar Miller': 'RB',
               'Kelvin Benjamin': 'WR', 'Jamison Crowder': 'WR', 'Kerryon Johnson': 'RB', 'Cam Newton': 'QB',
-              'Carson Wentz': 'QB', 'Russell Wilson': 'QB', 'Deshaun Watson': 'QB'}
+              'Carson Wentz': 'QB', 'Russell Wilson': 'QB', 'Deshaun Watson': 'QB', 'Jordan Reed': 'TE',
+              'Tevin Coleman': 'RB', 'Tarik Cohen': 'RB', 'Chris Thompson': 'RB', 'DeSean Jackson': 'WR',
+              'Robby Anderson': 'WR', 'Jimmy Graham': 'TE', 'Jordy Nelson': 'WR', 'Marquise Goodwin': 'WR',
+              'Dez Bryant': 'WR', 'Isaiah Crowell': 'RB', 'Jamaal Williams': 'RB', 'Rex Burkhead': 'RB',
+              "D'Onta Foreman": 'RB', 'Marlon Mack': 'RB', 'Kyle Rudolph': 'TE', 'Aaron Jones': 'RB',
+              'Marqise Lee': 'WR', 'Sterling Shepard': 'WR', 'Kenny Stills': 'WR', 'Nelson Agholor': 'WR',
+              'Rishard Matthews': 'WR', 'Josh Doctson': 'WR',	'Bilal Powell': 'RB', 'Nick Chubb': 'RB',
+              'Carlos Hyde': 'RB', 'Jack Doyle': 'TE', 'Trey Burton': 'TE', 'Giovani Bernard': 'RB',
+              'Devontae Booker': 'RB', 'C.J. Anderson': 'RB', 'Allen Hurns': 'WR', 'Paul Richardson': 'WR',
+              'Ben Roethlisberger': 'QB', 'Kirk Cousins': 'QB', 'Andrew Luck': 'QB', 'Tyler Eifert': 'TE',
+              'Kenny Golladay': 'WR', 'Mohamed Sanu': 'WR', 'Martavis Bryant': 'WR', 'D.J. Moore': 'WR',
+              'Tyler Lockett': 'WR', 'Calvin Ridley': 'WR', 'Matthew Stafford': 'QB', 'Drew Brees': 'QB',
+              'Cameron Meredith': 'WR', 'Anthony Miller': 'WR', 'Christian Kirk': 'WR', 'Michael Gallup': 'WR',
+              'Jordan Matthews': 'WR', 'Albert Wilson': 'WR', 'James Washington': 'WR', 'John Ross': 'WR',
+              'Zay Jones': 'WR', 'Mike Williams': 'WR', 'Theo Riddick': 'RB',	'James White': 'RB',
+              'Charles Clay': 'TE', 'Jameis Winston': 'QB', 'Philip Rivers': 'QB', 'Kenneth Dixon': 'RB',
+              'Jordan Wilkins': 'RB', 'Latavius Murray': 'RB', 'David Njoku': 'TE',	'Patrick Mahomes': 'QB',
+              'Jimmy Garoppolo': 'QB', 'Matt Breida': 'RB', 'Ty Montgomery': 'RB', 'Chris Carson': 'RB',
+              'LeGarrette Blount': 'RB', 'Jaguars D/ST': 'DST', 'Cameron Brate': 'TE', 'Terrance Williams': 'WR',
+              'Ted Ginn Jr': 'WR', 'Donte Moncrief': 'WR', 'Nyheim Hines': 'RB', 'Alex Smith': 'QB',
+              'Marcus Mariota': 'QB', 'Dak Prescott': 'QB', 'Matt Ryan': 'QB', 'George Kittle': 'TE',
+              'Mike Wallace': 'WR', 'Austin Seferian-Jenkins': 'TE', 'Peyton Barber': 'RB', 'Jared Goff': 'QB',
+              'Mitchell Trubisky': 'QB', 'Eagles D/ST': 'DST', 'Rams D/ST': 'DST', 'Vikings D/ST': 'DST',
+              'Texans D/ST': 'DST', 'Ravens D/ST': 'DST', 'Greg Zuerlein': 'K', 'Stephen Gostkowski': 'K',
+              'Justin Tucker': 'K', 'Patriots D/ST': 'DST', 'Chargers D/ST': 'DST', 'Broncos D/ST': 'DST',
+              'Panthers D/ST': 'DST', 'Saints D/ST': 'DST', 'Titans D/ST': 'DST',	'Matt Bryant': 'K',
+              'Wil Lutz': 'K', 'Chris Boswell': 'K', 'Robbie Gould': 'K', 'Jake Elliott': 'K', 'Matt Prater': 'K',
+              'Harrison Butker': 'K', 'Adam Vinatieri': 'K', 'Graham Gano': 'K', 'Darren Sproles': 'RB',
+              'Frank Gore': 'RB', 'Doug Martin': 'RB', 'Benjamin Watson': 'TE', 'Vance McDonald': 'TE',
+              'Mike Gesicki': 'TE', 'Austin Ekeler': 'RB', 'Elijah McGuire': 'RB'}
 
 top200List = [key for key in top200dict.keys()]
 top200Positions = [value for value in top200dict.values()]
@@ -66,7 +95,7 @@ class draftSimulator(Tk):
         self.user_player_list.grid(row=1, column=6, rowspan=10, columnspan=4, sticky=N + E + W + S, ipadx=80, ipady=50,
                                    padx=20, pady=5)
         self.results_list = Listbox(activestyle='none', font='Monaco')
-        self.results_list.grid(row=14, column=0, rowspan=7, columnspan=9, sticky=E + W, ipady=150, padx=20, pady=10)
+        self.results_list.grid(row=14, column=0, rowspan=7, columnspan=9, sticky=E + W, ipady=100, padx=20, pady=10)
         self.left_scrollbar = Scrollbar(self.player_list, orien='vertical', command=self.player_list.yview)
         self.player_list.configure(yscrollcommand=self.left_scrollbar.set)
         self.left_scrollbar.pack(side=LEFT, fill=Y)
@@ -176,7 +205,6 @@ class draftSimulator(Tk):
                 compRBList = []
                 compWRList = []
                 compTEList = []
-                roundResults = {}
                 userTeam = []
                 Team2 = []
                 Team3 = []
@@ -185,8 +213,6 @@ class draftSimulator(Tk):
                 Team6 = []
                 Team7 = []
                 Team8 = []
-                team_dict = {'Team 2': Team2, 'Team 3': Team3, 'Team 4': Team4, 'Team 5': Team5,
-                             'Team 6': Team6, 'Team 7': Team7, 'Team 8': Team8}
 
                 # making player lists by position
                 for player, position in userdict.items():
@@ -221,7 +247,8 @@ class draftSimulator(Tk):
                     return temp
 
                 def position_count(list1, list2):
-                    return len(set(list1) & set(list2))
+                    list3 = [value for value in list1 if value in list2]
+                    return list3
 
                 # variables
                 draftRound = 0
@@ -229,9 +256,9 @@ class draftSimulator(Tk):
 
                 # draft starts here
                 print('The draft is live!')
-                print(self.user_player_list.get(ACTIVE))
+                print(self.user_player_list.get(0, END))
                 # randomizes the draft order
-                draftOrder = ['user', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6', 'Team 7', 'Team 8']
+                draftOrder = [userTeam, Team2, Team3, Team4, Team5, Team6, Team7, Team8]
                 random.shuffle(draftOrder)
                 print(draftOrder)
                 print()
@@ -262,7 +289,7 @@ class draftSimulator(Tk):
                                         pick = compTEList[0]
                                 else:
                                     pick = (userList[:1])[0]  # pick the player at the top of your list
-                                roundResults.update({team: pick})  # add the pick to the round results dictionary
+                                userTeam.append(pick)  # add the pick to your team
                                 if pick in userList:
                                     userList.remove(pick)  # remove the player from your draft list
                                 if pick in compList:
@@ -284,22 +311,26 @@ class draftSimulator(Tk):
                                 elif pick in compTEList:
                                     compTEList.remove(pick)
                             else:  # this is the AI's pick logic
-                                if len(compQBList) > 0 and ((position_count(team_dict.get(team), compQBList) == 1 and position_count(team_dict.get(team), compRBList) < 3 and position_count(team_dict.get(team), compWRList) < 3) or position_count(team_dict.get(team), compQBList) == 2):
+                                if len(compQBList) > 0 \
+                                        and ((position_count(team, compQBList) == 1
+                                            and position_count(team, compRBList) < 3
+                                            and position_count(team, compWRList) < 3)
+                                        or position_count(team, compQBList) == 2):
                                     try:
                                         pick = random.sample(position_ignore(compList, 'QB')[:threshold], 1)[0]  # cases to ignore picking QB
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'QB'), 1)  # in case list length is below threshold
-                                elif len(compRBList) > 0 and ((position_count(team_dict.get(team), compRBList) == 3 and position_count(team_dict.get(team), compWRList) < 2) or (position_count(team_dict.get(team), compRBList) == 4 and position_count(team_dict.get(team), compWRList) == 2)):
+                                elif len(compRBList) > 0 and ((position_count(team, compRBList) == 3 and position_count(team, compWRList) < 2) or (position_count(team, compRBList) == 4 and position_count(team, compWRList) == 2)):
                                     try:
                                         pick = random.sample(position_ignore(compList, 'RB')[:threshold], 1)[0]  # cases to ignore picking RB
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'RB'), 1)
-                                elif len(compWRList) > 0 and ((position_count(team_dict.get(team), compWRList) == 3 and position_count(team_dict.get(team), compRBList) < 2) or (position_count(team_dict.get(team), compWRList) == 4 and position_count(team_dict.get(team), compRBList) == 2)):
+                                elif len(compWRList) > 0 and ((position_count(team, compWRList) == 3 and position_count(team, compRBList) < 2) or (position_count(team, compWRList) == 4 and position_count(team, compRBList) == 2)):
                                     try:
                                         pick = random.sample(position_ignore(compList, 'WR')[:threshold], 1)[0]  # cases to ignore picking WR
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'WR'), 1)
-                                elif len(compTEList) > 0 and position_count(team_dict.get(team), compTEList) == 2:
+                                elif len(compTEList) > 0 and position_count(team, compTEList) == 2:
                                     try:
                                         pick = random.sample(position_ignore(compList, 'TE')[:threshold], 1)[0]  # cases to ignore picking TE
                                     except IndexError or ValueError:
@@ -309,11 +340,11 @@ class draftSimulator(Tk):
                                             pick = random.sample(compList[:threshold], 1)[0]
                                         except IndexError or ValueError:
                                             pick = random.sample(compList, 1)
-                                elif position_count(team_dict.get(team), compQBList) == 1 and position_count(team_dict.get(team), compRBList) < 4 and position_count(team_dict.get(team), compWRList) < 4 and position_count(team_dict.get(team), compTEList) == 1:
+                                elif position_count(team, compQBList) == 1 and position_count(team, compRBList) < 4 and position_count(team, compWRList) < 4 and position_count(team, compTEList) == 1:
                                     random.sample(random.sample((compRBList + compWRList), 3), 1)
-                                elif position_count(team_dict.get(team), compQBList) == 0 and len(compQBList) > 0 and draftRound > 9:
+                                elif position_count(team, compQBList) == 0 and len(compQBList) > 0 and draftRound > 9:
                                     pick = random.sample(compQBList, 1)  # case to pick QB
-                                elif position_count(team_dict.get(team), compTEList) == 0 and len(compTEList) > 0 and draftRound > 10:
+                                elif position_count(team, compTEList) == 0 and len(compTEList) > 0 and draftRound > 10:
                                     try:
                                         pick = random.sample(compTEList[:threshold], 1)[0]  # case to pick TE
                                     except IndexError or ValueError:
@@ -323,7 +354,7 @@ class draftSimulator(Tk):
                                         pick = random.sample(compList[:threshold], 1)[0]
                                     except IndexError or ValueError:
                                         pick = random.sample(compList, 1)
-                                roundResults.update({team: pick})
+                                team.append(pick)  # add the pick to the comp team
                                 if pick in userList:
                                     userList.remove(pick)
                                 if pick in compList:
@@ -347,40 +378,21 @@ class draftSimulator(Tk):
                         else:  # can't check for a team having too many of one position in the first round
                             if team == 'user':
                                 pick = (userList[:1])[0]
-                                roundResults.update({team: pick})
+                                team.append(pick)
                                 userList.remove(pick)
                                 compList.remove(pick)
                             else:
                                 pick = random.sample(compList[:threshold], 1)[0]
-                                roundResults.update({team: pick})
+                                team.append(pick)
                                 if pick in userList:
                                     userList.remove(pick)
                                 compList.remove(pick)
-                    userTeam.append(roundResults.get('user'))  # adds the player you drafted to your team list
-                    Team2.append(roundResults.get('Team 2'))  # does the same for all other teams
-                    Team3.append(roundResults.get('Team 3'))
-                    Team4.append(roundResults.get('Team 4'))
-                    Team5.append(roundResults.get('Team 5'))
-                    Team6.append(roundResults.get('Team 6'))
-                    Team7.append(roundResults.get('Team 7'))
-                    Team8.append(roundResults.get('Team 8'))
-                    # print('Round ' + str(round + 1) + ': ' + str(roundResults))  # print results for each round
                     print()
                     draftOrder = draftOrder[::-1]  # reverses the draft order for every other round
                     if draftRound % 6 == 0:
                         threshold += 1  # makes the AI choose from a larger pool of players every other round
                     draftRound += 1  # moves on to the next round
-                """
-                # prints the draft results!
-                print('Your team: ' + str(userTeam))
-                print('Team 2: ' + str(Team2))
-                print('Team 3: ' + str(Team3))
-                print('Team 4: ' + str(Team4))
-                print('Team 5: ' + str(Team5))
-                print('Team 6: ' + str(Team6))
-                print('Team 7: ' + str(Team7))
-                print('Team 8: ' + str(Team8))
-                """
+
                 print('Your Team: ' + str(userTeam))
                 userDraftPicks.append(userTeam)
                 print()
