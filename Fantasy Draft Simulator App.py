@@ -26,35 +26,31 @@ for line in text.splitlines():
 
 words = string.split('<')
 
-playerlist = []
+top200List = []
 numlist = list(str(range(200)))
-
 for word in words:
     if 'http://www.espn.com/nfl/player/_/id/' in word:
         name = word.split('>')
         if 'http://' not in name:
-            playerlist.append(name[1])
+            top200List.append(name[1])
     elif 'D/ST' in word:
         dname = word.split('. ')
         if 'td>' not in dname:
-            playerlist.append(dname[1])
+            top200List.append(dname[1])
     elif 'http://www.espn.com/nfl/player/_/id/' not in word and 'td>' in word and any(
             num in word for num in numlist) and '.' in word:
         othername = word.split('. ')
         if 'td>' not in othername and othername[1] != '':
-            playerlist.append(othername[1])
+            top200List.append(othername[1])
 
-positionlist = []
+top200Positions = []
 poslist = ['td>QB', 'td>RB', 'td>WR', 'td>TE', 'td>DST', 'td>K']
 for word in words:
     if any(pos == word for pos in poslist) and all(num not in word for num in numlist):
         position = word.split('>')
-        positionlist.append(position[1])
+        top200Positions.append(position[1])
 
-top200dict = dict(zip(playerlist, positionlist))
-
-top200List = [key for key in top200dict.keys()]
-top200Positions = [value for value in top200dict.values()]
+top200dict = dict(zip(top200List, top200Positions))
 
 
 class draftSimulator(Tk):
@@ -249,7 +245,9 @@ class draftSimulator(Tk):
                 print('The draft is live!')
                 print(self.user_player_list.get(0, END))
                 # randomizes the draft order
-                draftOrder = [userTeam, Team2, Team3, Team4, Team5, Team6, Team7, Team8]
+                team_dict = {'userTeam': userTeam, 'Team2': Team2, 'Team3': Team3, 'Team4': Team4,
+                             'Team5': Team5, 'Team6': Team6, 'Team7': Team7, 'Team8': Team8}
+                draftOrder = [team for team in team_dict.keys()]
                 random.shuffle(draftOrder)
                 print(draftOrder)
                 print()
@@ -257,7 +255,7 @@ class draftSimulator(Tk):
                 while draftRound < round_count:  # we only want a certain number of rounds
                     for team in draftOrder:
                         if draftRound != 0:
-                            if team == 'user':  # this is your team's pick logic
+                            if team == 'userTeam':  # this is your team's pick logic
                                 if len(userQBList) > 0 and ((position_count(userTeam,
                                                                             userQBList) == 1 and position_count(
                                         userTeam, userRBList) < 3 and position_count(userTeam,
@@ -320,35 +318,33 @@ class draftSimulator(Tk):
                                     compTEList.remove(pick)
                             else:  # this is the AI's pick logic
                                 if len(compQBList) > 0 \
-                                        and ((position_count(team, compQBList) == 1
-                                              and position_count(team, compRBList) < 3
-                                              and position_count(team, compWRList) < 3)
-                                             or position_count(team, compQBList) == 2):
+                                        and ((position_count(team_dict.get(team), compQBList) == 1
+                                              and position_count(team_dict.get(team), compRBList) < 3
+                                              and position_count(team_dict.get(team), compWRList) < 3)
+                                             or position_count(team_dict.get(team), compQBList) == 2):
                                     try:
                                         pick = random.sample(position_ignore(compList, 'QB')[:threshold], 1)[
                                             0]  # cases to ignore picking QB
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'QB'),
                                                              1)  # in case list length is below threshold
-                                elif len(compRBList) > 0 and ((position_count(team, compRBList) == 3 and position_count(
-                                        team, compWRList) < 2) or (position_count(team,
-                                                                                  compRBList) == 4 and position_count(
-                                        team, compWRList) == 2)):
+                                elif len(compRBList) > 0 and ((position_count(team_dict.get(team), compRBList) == 3 and position_count(
+                                        team_dict.get(team), compWRList) < 2) or (position_count(team_dict.get(team),
+                                                                                  compRBList) == 4 and position_count(team_dict.get(team), compWRList) == 2)):
                                     try:
                                         pick = random.sample(position_ignore(compList, 'RB')[:threshold], 1)[
                                             0]  # cases to ignore picking RB
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'RB'), 1)
-                                elif len(compWRList) > 0 and ((position_count(team, compWRList) == 3 and position_count(
-                                        team, compRBList) < 2) or (position_count(team,
-                                                                                  compWRList) == 4 and position_count(
-                                        team, compRBList) == 2)):
+                                elif len(compWRList) > 0 and ((position_count(team_dict.get(team), compWRList) == 3 and position_count(
+                                        team_dict.get(team), compRBList) < 2) or (position_count(team_dict.get(team),
+                                                                                  compWRList) == 4 and position_count(team_dict.get(team), compRBList) == 2)):
                                     try:
                                         pick = random.sample(position_ignore(compList, 'WR')[:threshold], 1)[
                                             0]  # cases to ignore picking WR
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'WR'), 1)
-                                elif len(compTEList) > 0 and position_count(team, compTEList) == 2:
+                                elif len(compTEList) > 0 and position_count(team_dict.get(team), compTEList) == 2:
                                     try:
                                         pick = random.sample(position_ignore(compList, 'TE')[:threshold], 1)[
                                             0]  # cases to ignore picking TE
@@ -359,13 +355,13 @@ class draftSimulator(Tk):
                                             pick = random.sample(compList[:threshold], 1)[0]
                                         except IndexError or ValueError:
                                             pick = random.sample(compList, 1)
-                                elif position_count(team, compQBList) == 1 and position_count(team,
+                                elif position_count(team_dict.get(team), compQBList) == 1 and position_count(team_dict.get(team),
                                                                                               compRBList) < 4 and position_count(
-                                        team, compWRList) < 4 and position_count(team, compTEList) == 1:
+                                    team_dict.get(team), compWRList) < 4 and position_count(team_dict.get(team), compTEList) == 1:
                                     random.sample(random.sample((compRBList + compWRList), 3), 1)
-                                elif position_count(team, compQBList) == 0 and len(compQBList) > 0 and draftRound > 9:
+                                elif position_count(team_dict.get(team), compQBList) == 0 and len(compQBList) > 0 and draftRound > 9:
                                     pick = random.sample(compQBList, 1)  # case to pick QB
-                                elif position_count(team, compTEList) == 0 and len(compTEList) > 0 and draftRound > 10:
+                                elif position_count(team_dict.get(team), compTEList) == 0 and len(compTEList) > 0 and draftRound > 10:
                                     try:
                                         pick = random.sample(compTEList[:threshold], 1)[0]  # case to pick TE
                                     except IndexError or ValueError:
@@ -375,7 +371,7 @@ class draftSimulator(Tk):
                                         pick = random.sample(compList[:threshold], 1)[0]
                                     except IndexError or ValueError:
                                         pick = random.sample(compList, 1)
-                                team.append(pick)  # add the pick to the comp team
+                                team_dict.get(team).append(pick)  # add the pick to the comp team
                                 if pick in userList:
                                     userList.remove(pick)
                                 if pick in compList:
@@ -397,14 +393,14 @@ class draftSimulator(Tk):
                                 elif pick in compTEList:
                                     compTEList.remove(pick)
                         else:  # can't check for a team having too many of one position in the first round
-                            if team == 'user':
+                            if team == 'userTeam':
                                 pick = (userList[:1])[0]
-                                team.append(pick)
+                                userTeam.append(pick)
                                 userList.remove(pick)
                                 compList.remove(pick)
                             else:
                                 pick = random.sample(compList[:threshold], 1)[0]
-                                team.append(pick)
+                                team_dict.get(team).append(pick)
                                 if pick in userList:
                                     userList.remove(pick)
                                 compList.remove(pick)

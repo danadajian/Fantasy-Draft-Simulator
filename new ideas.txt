@@ -1,0 +1,2 @@
+1. add feature to save, export, and import player list ranked by preference
+2. add option to set your pick order in the draft, or randomize it
