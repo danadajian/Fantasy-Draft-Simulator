@@ -171,6 +171,8 @@ class draftSimulator(Tk):
         self.results_list.delete(0, END)
 
     def fantasy_draft(self):
+        self.results_list.delete(0, END)
+
         draft_count = int(self.draft_count.get())
         round_count = int(self.round_count.get())
 
