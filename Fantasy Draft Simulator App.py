@@ -1,5 +1,7 @@
 """ Fantasy Draft Simulator """
 
+import requests
+from bs4 import BeautifulSoup
 import random
 from tkinter import *
 from tkinter.ttk import *
@@ -11,56 +13,45 @@ userDraftPicks = []
 userdict = {}
 
 # ranked player list that everyone drafts from
-top200dict = {"Le'Veon Bell": 'RB', 'Todd Gurley': 'RB', 'David Johnson': 'RB', 'Antonio Brown': 'WR',
-              'Ezekiel Elliott': 'RB', 'DeAndre Hopkins': 'WR', 'Saquon Barkley': 'RB', 'Alvin Kamara': 'RB',
-              'Julio Jones': 'WR', 'Odell Beckham Jr.': 'WR', 'Keenan Allen': 'WR', 'Kareem Hunt': 'RB',
-              'Dalvin Cook': 'RB', 'Michael Thomas': 'WR', 'Melvin Gordon': 'RB', 'Leonard Fournette': 'RB',
-              'A.J. Green': 'WR', 'LeSean McCoy': 'RB', 'Christian McCaffrey': 'RB', 'Devonta Freeman': 'RB',
-              'Davante Adams': 'WR', 'Rob Gronkowski': 'TE', 'Mike Evans': 'WR', 'Adam Thielen': 'WR',
-              'Larry Fitzgerald': 'WR', 'Tyreek Hill': 'WR', 'T.Y. Hilton': 'WR', 'Doug Baldwin': 'WR',
-              'Travis Kelce': 'TE', 'Zach Ertz': 'TE', 'Demaryius Thomas': 'WR', 'Stefon Diggs': 'WR',
-              'Allen Robinson': 'WR', 'Golden Tate': 'WR', 'Josh Gordon': 'WR', 'Jerick McKinnon': 'RB',
-              'Joe Mixon': 'RB', 'Jordan Howard': 'RB', 'Alshon Jeffery': 'WR', 'JuJu Smith-Schuster': 'WR',
-              'Amari Cooper': 'WR', 'Jarvis Landry': 'WR', 'Rashaad Penny': 'RB', 'Kenyan Drake': 'RB',
-              'Derrius Guice': 'RB', 'Jay Ajayi': 'RB', 'Sony Michel': 'RB', 'Alex Collins': 'RB',
-              'Royce Freeman': 'RB', 'Ronald Jones': 'RB', 'Marvin Jones Jr.': 'WR', 'Robert Woods': 'WR',
-              'Emmanuel Sanders': 'WR', 'Pierre Garcon': 'WR', 'Marshawn Lynch': 'RB', 'Mark Ingram': 'RB',
-              'Derrick Henry': 'RB', 'Dion Lewis': 'RB', 'Duke Johnson Jr.': 'RB', 'Michael Crabtree': 'WR',
-              'Chris Hogan': 'WR', 'Brandin Cooks': 'WR', 'Corey Davis': 'WR', 'Aaron Rodgers': 'QB',
-              'Tom Brady': 'QB', 'Sammy Watkins': 'WR', 'Cooper Kupp': 'WR', 'Devin Funchess': 'WR',
-              'DeVante Parker': 'WR', 'Randall Cobb': 'WR', 'Will Fuller V': 'WR', 'Julian Edelman': 'WR',
-              'Greg Olsen': 'TE', 'Delanie Walker': 'TE', 'Evan Engram': 'TE', 'Lamar Miller': 'RB',
-              'Kelvin Benjamin': 'WR', 'Jamison Crowder': 'WR', 'Kerryon Johnson': 'RB', 'Cam Newton': 'QB',
-              'Carson Wentz': 'QB', 'Russell Wilson': 'QB', 'Deshaun Watson': 'QB', 'Jordan Reed': 'TE',
-              'Tevin Coleman': 'RB', 'Tarik Cohen': 'RB', 'Chris Thompson': 'RB', 'DeSean Jackson': 'WR',
-              'Robby Anderson': 'WR', 'Jimmy Graham': 'TE', 'Jordy Nelson': 'WR', 'Marquise Goodwin': 'WR',
-              'Dez Bryant': 'WR', 'Isaiah Crowell': 'RB', 'Jamaal Williams': 'RB', 'Rex Burkhead': 'RB',
-              "D'Onta Foreman": 'RB', 'Marlon Mack': 'RB', 'Kyle Rudolph': 'TE', 'Aaron Jones': 'RB',
-              'Marqise Lee': 'WR', 'Sterling Shepard': 'WR', 'Kenny Stills': 'WR', 'Nelson Agholor': 'WR',
-              'Rishard Matthews': 'WR', 'Josh Doctson': 'WR',	'Bilal Powell': 'RB', 'Nick Chubb': 'RB',
-              'Carlos Hyde': 'RB', 'Jack Doyle': 'TE', 'Trey Burton': 'TE', 'Giovani Bernard': 'RB',
-              'Devontae Booker': 'RB', 'C.J. Anderson': 'RB', 'Allen Hurns': 'WR', 'Paul Richardson': 'WR',
-              'Ben Roethlisberger': 'QB', 'Kirk Cousins': 'QB', 'Andrew Luck': 'QB', 'Tyler Eifert': 'TE',
-              'Kenny Golladay': 'WR', 'Mohamed Sanu': 'WR', 'Martavis Bryant': 'WR', 'D.J. Moore': 'WR',
-              'Tyler Lockett': 'WR', 'Calvin Ridley': 'WR', 'Matthew Stafford': 'QB', 'Drew Brees': 'QB',
-              'Cameron Meredith': 'WR', 'Anthony Miller': 'WR', 'Christian Kirk': 'WR', 'Michael Gallup': 'WR',
-              'Jordan Matthews': 'WR', 'Albert Wilson': 'WR', 'James Washington': 'WR', 'John Ross': 'WR',
-              'Zay Jones': 'WR', 'Mike Williams': 'WR', 'Theo Riddick': 'RB',	'James White': 'RB',
-              'Charles Clay': 'TE', 'Jameis Winston': 'QB', 'Philip Rivers': 'QB', 'Kenneth Dixon': 'RB',
-              'Jordan Wilkins': 'RB', 'Latavius Murray': 'RB', 'David Njoku': 'TE',	'Patrick Mahomes': 'QB',
-              'Jimmy Garoppolo': 'QB', 'Matt Breida': 'RB', 'Ty Montgomery': 'RB', 'Chris Carson': 'RB',
-              'LeGarrette Blount': 'RB', 'Jaguars D/ST': 'DST', 'Cameron Brate': 'TE', 'Terrance Williams': 'WR',
-              'Ted Ginn Jr': 'WR', 'Donte Moncrief': 'WR', 'Nyheim Hines': 'RB', 'Alex Smith': 'QB',
-              'Marcus Mariota': 'QB', 'Dak Prescott': 'QB', 'Matt Ryan': 'QB', 'George Kittle': 'TE',
-              'Mike Wallace': 'WR', 'Austin Seferian-Jenkins': 'TE', 'Peyton Barber': 'RB', 'Jared Goff': 'QB',
-              'Mitchell Trubisky': 'QB', 'Eagles D/ST': 'DST', 'Rams D/ST': 'DST', 'Vikings D/ST': 'DST',
-              'Texans D/ST': 'DST', 'Ravens D/ST': 'DST', 'Greg Zuerlein': 'K', 'Stephen Gostkowski': 'K',
-              'Justin Tucker': 'K', 'Patriots D/ST': 'DST', 'Chargers D/ST': 'DST', 'Broncos D/ST': 'DST',
-              'Panthers D/ST': 'DST', 'Saints D/ST': 'DST', 'Titans D/ST': 'DST',	'Matt Bryant': 'K',
-              'Wil Lutz': 'K', 'Chris Boswell': 'K', 'Robbie Gould': 'K', 'Jake Elliott': 'K', 'Matt Prater': 'K',
-              'Harrison Butker': 'K', 'Adam Vinatieri': 'K', 'Graham Gano': 'K', 'Darren Sproles': 'RB',
-              'Frank Gore': 'RB', 'Doug Martin': 'RB', 'Benjamin Watson': 'TE', 'Vance McDonald': 'TE',
-              'Mike Gesicki': 'TE', 'Austin Ekeler': 'RB', 'Elijah McGuire': 'RB'}
+session = requests.session()
+req = session.get(
+    'http://www.espn.com/fantasy/football/story/_/page/18RanksPreseason200nonPPR/2018-fantasy-football-non-ppr-rankings-top-200')
+doc = BeautifulSoup(req.content, 'html.parser')
+text = str(doc.get_text)
+
+string = ''
+for line in text.splitlines():
+    if 'section class="col-c chk-height nocontent"' in line:
+        string = line
+
+words = string.split('<')
+
+playerlist = []
+numlist = list(str(range(200)))
+
+for word in words:
+    if 'http://www.espn.com/nfl/player/_/id/' in word:
+        name = word.split('>')
+        if 'http://' not in name:
+            playerlist.append(name[1])
+    elif 'D/ST' in word:
+        dname = word.split('. ')
+        if 'td>' not in dname:
+            playerlist.append(dname[1])
+    elif 'http://www.espn.com/nfl/player/_/id/' not in word and 'td>' in word and any(
+            num in word for num in numlist) and '.' in word:
+        othername = word.split('. ')
+        if 'td>' not in othername and othername[1] != '':
+            playerlist.append(othername[1])
+
+positionlist = []
+poslist = ['td>QB', 'td>RB', 'td>WR', 'td>TE', 'td>DST', 'td>K']
+for word in words:
+    if any(pos == word for pos in poslist) and all(num not in word for num in numlist):
+        position = word.split('>')
+        positionlist.append(position[1])
+
+top200dict = dict(zip(playerlist, positionlist))
 
 top200List = [key for key in top200dict.keys()]
 top200Positions = [value for value in top200dict.values()]
@@ -267,22 +258,39 @@ class draftSimulator(Tk):
                     for team in draftOrder:
                         if draftRound != 0:
                             if team == 'user':  # this is your team's pick logic
-                                if len(userQBList) > 0 and ((position_count(userTeam, userQBList) == 1 and position_count(userTeam, userRBList) < 3 and position_count(userTeam, userWRList) < 3) or position_count(userTeam, userQBList) == 2):
+                                if len(userQBList) > 0 and ((position_count(userTeam,
+                                                                            userQBList) == 1 and position_count(
+                                        userTeam, userRBList) < 3 and position_count(userTeam,
+                                                                                     userWRList) < 3) or position_count(
+                                        userTeam, userQBList) == 2):
                                     pick = (position_ignore(userList, 'QB')[:1])[0]  # cases to ignore picking QB
-                                elif len(userRBList) > 0 and ((position_count(userTeam, userRBList) == 3 and position_count(userTeam, userWRList) < 2) or (position_count(userTeam, userRBList) == 4 and position_count(userTeam, userWRList) == 2)):
+                                elif len(userRBList) > 0 and ((position_count(userTeam,
+                                                                              userRBList) == 3 and position_count(
+                                        userTeam, userWRList) < 2) or (position_count(userTeam,
+                                                                                      userRBList) == 4 and position_count(
+                                        userTeam, userWRList) == 2)):
                                     pick = (position_ignore(userList, 'RB')[:1])[0]  # cases to ignore picking RB
-                                elif len(userWRList) > 0 and ((position_count(userTeam, userWRList) == 3 and position_count(userTeam, userRBList) < 2) or (position_count(userTeam, userWRList) == 4 and position_count(userTeam, userRBList) == 2)):
+                                elif len(userWRList) > 0 and ((position_count(userTeam,
+                                                                              userWRList) == 3 and position_count(
+                                        userTeam, userRBList) < 2) or (position_count(userTeam,
+                                                                                      userWRList) == 4 and position_count(
+                                        userTeam, userRBList) == 2)):
                                     pick = (position_ignore(userList, 'WR')[:1])[0]  # cases to ignore picking WR
                                 elif len(userTEList) > 0 and position_count(userTeam, userTEList) == 2:
                                     pick = position_ignore(userList, 'TE')[:1][0]  # case to ignore picking TE
-                                elif position_count(userTeam, userQBList) == 1 and position_count(userTeam, userRBList) < 4 and position_count(userTeam, userWRList) < 4 and position_count(userTeam, userTEList) == 1:
-                                    random.sample(random.sample((userRBList + userWRList), 3), 1)  # cases to ignore QB and TE
-                                elif position_count(userTeam, userQBList) == 0 and len(compQBList) > 0 and draftRound > 9:  # case to pick QB
+                                elif position_count(userTeam, userQBList) == 1 and position_count(userTeam,
+                                                                                                  userRBList) < 4 and position_count(
+                                        userTeam, userWRList) < 4 and position_count(userTeam, userTEList) == 1:
+                                    random.sample(random.sample((userRBList + userWRList), 3),
+                                                  1)  # cases to ignore QB and TE
+                                elif position_count(userTeam, userQBList) == 0 and len(
+                                        compQBList) > 0 and draftRound > 9:  # case to pick QB
                                     if len(userQBList) > 0:
                                         pick = userQBList[0]
                                     else:
                                         pick = compQBList[0]
-                                elif position_count(userTeam, userTEList) == 0 and (len(userTEList) > 0 or len(compTEList) > 0) and draftRound > 10:  # case to pick TE
+                                elif position_count(userTeam, userTEList) == 0 and (len(userTEList) > 0 or len(
+                                        compTEList) > 0) and draftRound > 10:  # case to pick TE
                                     if len(userTEList) > 0:
                                         pick = userTEList[0]
                                     else:
@@ -313,26 +321,37 @@ class draftSimulator(Tk):
                             else:  # this is the AI's pick logic
                                 if len(compQBList) > 0 \
                                         and ((position_count(team, compQBList) == 1
-                                            and position_count(team, compRBList) < 3
-                                            and position_count(team, compWRList) < 3)
-                                        or position_count(team, compQBList) == 2):
+                                              and position_count(team, compRBList) < 3
+                                              and position_count(team, compWRList) < 3)
+                                             or position_count(team, compQBList) == 2):
                                     try:
-                                        pick = random.sample(position_ignore(compList, 'QB')[:threshold], 1)[0]  # cases to ignore picking QB
+                                        pick = random.sample(position_ignore(compList, 'QB')[:threshold], 1)[
+                                            0]  # cases to ignore picking QB
                                     except IndexError or ValueError:
-                                        pick = random.sample(position_ignore(compList, 'QB'), 1)  # in case list length is below threshold
-                                elif len(compRBList) > 0 and ((position_count(team, compRBList) == 3 and position_count(team, compWRList) < 2) or (position_count(team, compRBList) == 4 and position_count(team, compWRList) == 2)):
+                                        pick = random.sample(position_ignore(compList, 'QB'),
+                                                             1)  # in case list length is below threshold
+                                elif len(compRBList) > 0 and ((position_count(team, compRBList) == 3 and position_count(
+                                        team, compWRList) < 2) or (position_count(team,
+                                                                                  compRBList) == 4 and position_count(
+                                        team, compWRList) == 2)):
                                     try:
-                                        pick = random.sample(position_ignore(compList, 'RB')[:threshold], 1)[0]  # cases to ignore picking RB
+                                        pick = random.sample(position_ignore(compList, 'RB')[:threshold], 1)[
+                                            0]  # cases to ignore picking RB
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'RB'), 1)
-                                elif len(compWRList) > 0 and ((position_count(team, compWRList) == 3 and position_count(team, compRBList) < 2) or (position_count(team, compWRList) == 4 and position_count(team, compRBList) == 2)):
+                                elif len(compWRList) > 0 and ((position_count(team, compWRList) == 3 and position_count(
+                                        team, compRBList) < 2) or (position_count(team,
+                                                                                  compWRList) == 4 and position_count(
+                                        team, compRBList) == 2)):
                                     try:
-                                        pick = random.sample(position_ignore(compList, 'WR')[:threshold], 1)[0]  # cases to ignore picking WR
+                                        pick = random.sample(position_ignore(compList, 'WR')[:threshold], 1)[
+                                            0]  # cases to ignore picking WR
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'WR'), 1)
                                 elif len(compTEList) > 0 and position_count(team, compTEList) == 2:
                                     try:
-                                        pick = random.sample(position_ignore(compList, 'TE')[:threshold], 1)[0]  # cases to ignore picking TE
+                                        pick = random.sample(position_ignore(compList, 'TE')[:threshold], 1)[
+                                            0]  # cases to ignore picking TE
                                     except IndexError or ValueError:
                                         pick = random.sample(position_ignore(compList, 'TE'), 1)
                                     except ValueError:
@@ -340,7 +359,9 @@ class draftSimulator(Tk):
                                             pick = random.sample(compList[:threshold], 1)[0]
                                         except IndexError or ValueError:
                                             pick = random.sample(compList, 1)
-                                elif position_count(team, compQBList) == 1 and position_count(team, compRBList) < 4 and position_count(team, compWRList) < 4 and position_count(team, compTEList) == 1:
+                                elif position_count(team, compQBList) == 1 and position_count(team,
+                                                                                              compRBList) < 4 and position_count(
+                                        team, compWRList) < 4 and position_count(team, compTEList) == 1:
                                     random.sample(random.sample((compRBList + compWRList), 3), 1)
                                 elif position_count(team, compQBList) == 0 and len(compQBList) > 0 and draftRound > 9:
                                     pick = random.sample(compQBList, 1)  # case to pick QB
