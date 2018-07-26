@@ -15,7 +15,7 @@ userdict = {}
 # ranked player list that everyone drafts from
 session = requests.session()
 req = session.get(
-    'http://www.espn.com/fantasy/football/story/_/page/18RanksPreseason200nonPPR/2018-fantasy-football-non-ppr-rankings-top-200')
+    'http://www.espn.com/fantasy/football/story/_/page/18RanksPreseason300nonPPR/2018-fantasy-football-non-ppr-rankings-top-300')
 doc = BeautifulSoup(req.content, 'html.parser')
 text = str(doc.get_text)
 
