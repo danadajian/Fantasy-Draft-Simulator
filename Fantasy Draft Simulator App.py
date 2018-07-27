@@ -152,7 +152,7 @@ class draftSimulator(Tk):
         print(userdict)
 
     def import_list(self):
-        list_to_import = (1, 2, 3, 5, 8, 9, 11, 12, 13, 15, 19, 24, 25, 31, 37, 39, 41, 42, 82, 43, 52, 55, 60, 67)
+        list_to_import = (1, 2, 3, 5, 9, 8, 12, 11, 13, 15, 25, 31, 24, 42, 37, 19, 82, 43, 55, 41, 39, 60, 52, 67)
         for i in list_to_import:
             if top300List[i] not in self.user_player_list.get(0, END):
                 self.user_player_list.insert(END, str(top300List[i]))
