@@ -1,4 +1,5 @@
 1. add feature to save, export, and import player list ranked by preference
 2. add option to set your pick order in the draft, or randomize it
 3. add option to choose how many teams are in the draft
-4. add info section to explain how to use the app and what it does
+4. Make the draft automatically the minimum number of rounds possible
+5. add info section to explain how to use the app and what it does

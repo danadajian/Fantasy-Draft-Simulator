@@ -26,31 +26,31 @@ for line in text.splitlines():
 
 words = string.split('<')
 
-top200List = []
+top300List = []
 numlist = list(str(range(200)))
 for word in words:
     if 'http://www.espn.com/nfl/player/_/id/' in word:
         name = word.split('>')
         if 'http://' not in name:
-            top200List.append(name[1])
+            top300List.append(name[1])
     elif 'D/ST' in word:
         dname = word.split('. ')
         if 'td>' not in dname:
-            top200List.append(dname[1])
+            top300List.append(dname[1])
     elif 'http://www.espn.com/nfl/player/_/id/' not in word and 'td>' in word and any(
             num in word for num in numlist) and '.' in word:
         othername = word.split('. ')
         if 'td>' not in othername and othername[1] != '':
-            top200List.append(othername[1])
+            top300List.append(othername[1])
 
-top200Positions = []
+top300Positions = []
 poslist = ['td>QB', 'td>RB', 'td>WR', 'td>TE', 'td>DST', 'td>K']
 for word in words:
     if any(pos == word for pos in poslist) and all(num not in word for num in numlist):
         position = word.split('>')
-        top200Positions.append(position[1])
+        top300Positions.append(position[1])
 
-top200dict = dict(zip(top200List, top200Positions))
+top300dict = dict(zip(top300List, top300Positions))
 
 
 class draftSimulator(Tk):
@@ -113,6 +113,8 @@ class draftSimulator(Tk):
         self.user_player_list.curIndex = None
 
         # buttons
+        self.send_button = Button(text='Select All', command=self.select_all)
+        self.send_button.grid(row=2, column=5, sticky=E + W)
         self.send_button = Button(text='Deselect All', command=self.deselect_all)
         self.send_button.grid(row=3, column=5, sticky=E + W)
         self.send_button = Button(text='>', command=self.choose_players)
@@ -121,6 +123,8 @@ class draftSimulator(Tk):
         self.send_button.grid(row=5, column=5, sticky=E + W)
         self.send_button = Button(text='<<', command=self.remove_all)
         self.send_button.grid(row=6, column=5, sticky=E + W)
+        self.send_button = Button(text='Import List', command=self.import_list)
+        self.send_button.grid(row=7, column=5, sticky=E + W)
         self.draft_button = Button(text='Draft!', command=self.fantasy_draft)
         self.draft_button.grid(row=11, column=7, sticky=W, pady=10)
 
@@ -136,15 +140,23 @@ class draftSimulator(Tk):
         menu.add_cascade(label='Help', menu=editmenu)
         editmenu.add_command(label='Help')  # command=
         """
-        for i in range(len(top200List)):
-            self.player_list.insert(END, '       ' + str(top200List[i]) + '   ' + str(top200Positions[i]))
+        for i in range(len(top300List)):
+            self.player_list.insert(END, '       ' + str(top300List[i]) + '   ' + str(top300Positions[i]))
 
     def choose_players(self):
         selected_players = self.player_list.curselection()
         for i in selected_players:
-            if top200List[i] not in self.user_player_list.get(0, END):
-                self.user_player_list.insert(END, str(top200List[i]))
-                userdict.update({top200List[i]: top200Positions[i]})
+            if top300List[i] not in self.user_player_list.get(0, END):
+                self.user_player_list.insert(END, str(top300List[i]))
+                userdict.update({top300List[i]: top300Positions[i]})
+        print(userdict)
+
+    def import_list(self):
+        list_to_import = (1, 2, 3, 5, 8, 9, 11, 12, 13, 15, 19, 24, 25, 31, 37, 39, 41, 42, 82, 43, 52, 55, 60, 67)
+        for i in list_to_import:
+            if top300List[i] not in self.user_player_list.get(0, END):
+                self.user_player_list.insert(END, str(top300List[i]))
+                userdict.update({top300List[i]: top300Positions[i]})
         print(userdict)
 
     def remove_player(self):
@@ -159,6 +171,9 @@ class draftSimulator(Tk):
         self.user_player_list.delete(0, END)
         userdict.clear()
         print(userdict)
+
+    def select_all(self):
+        self.player_list.select_set(first=0, last=END)
 
     def deselect_all(self):
         self.player_list.select_clear(0, END)
@@ -180,7 +195,7 @@ class draftSimulator(Tk):
             try:
                 # making player lists of each position
                 userList = []
-                compList = [key for key in top200dict.keys()]
+                compList = [key for key in top300dict.keys()]
                 for i in self.user_player_list.get(0, END):
                     userList.append(i)
                 print(userList)
@@ -214,7 +229,7 @@ class draftSimulator(Tk):
                     elif position == 'TE':
                         userTEList.append(player)
 
-                for player, position in top200dict.items():
+                for player, position in top300dict.items():
                     if position == 'QB':
                         compQBList.append(player)
                     elif position == 'RB':
@@ -227,11 +242,11 @@ class draftSimulator(Tk):
                 # functions
                 def position_ignore(list, position):
                     temp = []
-                    if all(top200dict.get(player) == position for player in list):
+                    if all(top300dict.get(player) == position for player in list):
                         temp = list
                     else:
                         for player in list:
-                            if top200dict.get(player) != position:
+                            if top300dict.get(player) != position:
                                 temp.append(player)
                     return temp
 
@@ -408,8 +423,8 @@ class draftSimulator(Tk):
                                 compList.remove(pick)
                     print()
                     draftOrder = draftOrder[::-1]  # reverses the draft order for every other round
-                    if draftRound % 6 == 0:
-                        threshold += 1  # makes the AI choose from a larger pool of players every other round
+                    if draftRound % 2 == 0:
+                        threshold += 2  # makes the AI choose from a larger pool of players every other round
                     draftRound += 1  # moves on to the next round
 
                 print('Your Team: ' + str(userTeam))
@@ -419,7 +434,7 @@ class draftSimulator(Tk):
                 print('\n')
             except IndexError:
                 messagebox.showinfo('Damn.',
-                                    'You have entered too few players to draft. Please select additional players.')
+                                    'You have entered too few players to draft. Please select additional players or reduce the number of draft rounds.')
                 draftRound = 0
                 threshold = 3
                 break
@@ -440,16 +455,29 @@ class draftSimulator(Tk):
             self.results_list.insert(END, '-' * 55)
             for key, value in sorted(draft_frequency.items(), key=lambda x: x[1], reverse=True):
                 keystring = key + ' ' * (22 - len(str(key)))
-                positionstring = top200dict.get(key) + ' ' * 15
+                positionstring = top300dict.get(key) + ' ' * 15
                 self.results_list.insert(END, keystring + positionstring + str(round((100.0 * value), 2)) + '%')
-                print(keystring, positionstring, str(round((100.0 * value), 2)) + '%')
+                # print(keystring, positionstring, str(round((100.0 * value), 2)) + '%')
             self.results_list.insert(END, '\n' '\n')
             userDraftPicks.clear()
             userDraftPicksFinal.clear()
             draft_frequency.clear()
             messagebox.showinfo('Nice.', 'Your drafts are complete.')
+            if draftOrder.index('userTeam') == 1:
+                print('You picked ' + str(draftOrder.index('userTeam')) + 'st.')
+            elif draftOrder.index('userTeam') == 2:
+                print('You picked ' + str(draftOrder.index('userTeam')) + 'nd.')
+            else:
+                print('You picked ' + str(draftOrder.index('userTeam')) + 'th.')
+            print('\n')
+            testList = []
+            for i in self.user_player_list.get(0, END):
+                testList.append(top300List.index(i))
+            testTuple = tuple(testList)
+            print(testTuple)
 
 
 root = Tk()
 ds = draftSimulator(root)
 root.mainloop()
+
