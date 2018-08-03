@@ -463,10 +463,12 @@ class draftSimulator(Tk):
             userDraftPicksFinal.clear()
             draft_frequency.clear()
             messagebox.showinfo('Nice.', 'Your drafts are complete.')
-            if draftOrder.index('userTeam') == 1:
-                print('You picked ' + str(draftOrder.index('userTeam')) + 'st.')
+            if draftOrder.index('userTeam') == 0:
+                print('You picked 1st.')
+            elif draftOrder.index('userTeam') == 1:
+                print('You picked 2nd.')
             elif draftOrder.index('userTeam') == 2:
-                print('You picked ' + str(draftOrder.index('userTeam')) + 'nd.')
+                print('You picked 3rd.')
             else:
                 print('You picked ' + str(draftOrder.index('userTeam')) + 'th.')
             print('\n')
