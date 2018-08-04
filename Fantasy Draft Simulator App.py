@@ -444,9 +444,8 @@ class draftSimulator(Tk):
                     draftRound += 1  # moves on to the next round
                     roundsDrafted += 1
             except IndexError:
-                print('Exception')
+                print("Couldn't draft all players.")
                 pass
-            print(draftOrder.index('userTeam'))
             print('Your Team: ' + str(userTeam))
             userDraftPicks.append(userTeam)
             print()
@@ -498,7 +497,6 @@ class draftSimulator(Tk):
             testList.append(top300List.index(i))
         testTuple = tuple(testList)
         print(testTuple)
-        print(self.random_checkbox.instate(['selected']))
 
 
 
