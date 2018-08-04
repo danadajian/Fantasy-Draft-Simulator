@@ -67,10 +67,10 @@ class draftSimulator(Tk):
         self.draft_count_label.grid(row=11, column=0, sticky=W, padx=10, pady=10)
         self.draft_count = Entry()
         self.draft_count.grid(row=11, column=2, sticky=W, padx=10)
-        self.round_count_label = Label(text='Enter number of rounds per draft:')
-        self.round_count_label.grid(row=11, column=5, sticky=W, padx=10, pady=10)
-        self.round_count = Entry()
-        self.round_count.grid(row=11, column=6, sticky=W, padx=10)
+        self.pick_order_label = Label(text='Which pick in the draft do you want? ')
+        self.pick_order_label.grid(row=11, column=5, sticky=W, padx=10, pady=10)
+        self.pick_order = Entry()
+        self.pick_order.grid(row=11, column=6, sticky=W, padx=10)
         self.results_list_label = Label(text='Draft Simulation Results:')
         self.results_list_label.grid(row=13, column=0, sticky=E + W, padx=20)
 
@@ -125,8 +125,11 @@ class draftSimulator(Tk):
         self.send_button.grid(row=6, column=5, sticky=E + W)
         self.send_button = Button(text='Import List', command=self.import_list)
         self.send_button.grid(row=7, column=5, sticky=E + W)
+        self.random_checkbox = Checkbutton(text='Random')
+        self.random_checkbox.grid(row=11, column=7, sticky=W)
+        self.random_checkbox.state(['!alternate'])
         self.draft_button = Button(text='Draft!', command=self.fantasy_draft)
-        self.draft_button.grid(row=11, column=7, sticky=W, pady=10)
+        self.draft_button.grid(row=11, column=8, sticky=W, pady=10)
 
         # menu
         menu = Menu(root)
@@ -189,88 +192,101 @@ class draftSimulator(Tk):
         self.results_list.delete(0, END)
 
         draft_count = int(self.draft_count.get())
-        round_count = int(self.round_count.get())
+        try:
+            pick_order = int(self.pick_order.get())
+        except ValueError:
+            if self.random_checkbox.instate(['selected']):
+                pick_order = 0
+            else:
+                self.random_checkbox.state(['selected'])
 
         for _ in range(draft_count):
-            try:
-                # making player lists of each position
-                userList = []
-                compList = [key for key in top300dict.keys()]
-                for i in self.user_player_list.get(0, END):
-                    userList.append(i)
-                print(userList)
+            # making player lists of each position
+            userList = []
+            compList = [key for key in top300dict.keys()]
+            for i in self.user_player_list.get(0, END):
+                userList.append(i)
+            print(userList)
 
-                # dictionary and list creation
-                userQBList = []
-                userRBList = []
-                userWRList = []
-                userTEList = []
-                compQBList = []
-                compRBList = []
-                compWRList = []
-                compTEList = []
-                userTeam = []
-                Team2 = []
-                Team3 = []
-                Team4 = []
-                Team5 = []
-                Team6 = []
-                Team7 = []
-                Team8 = []
+            # dictionary and list creation
+            userQBList = []
+            userRBList = []
+            userWRList = []
+            userTEList = []
+            compQBList = []
+            compRBList = []
+            compWRList = []
+            compTEList = []
+            userTeam = []
+            Team2 = []
+            Team3 = []
+            Team4 = []
+            Team5 = []
+            Team6 = []
+            Team7 = []
+            Team8 = []
 
-                # making player lists by position
-                for player, position in userdict.items():
-                    if position == 'QB':
-                        userQBList.append(player)
-                    elif position == 'RB':
-                        userRBList.append(player)
-                    elif position == 'WR':
-                        userWRList.append(player)
-                    elif position == 'TE':
-                        userTEList.append(player)
+            # making player lists by position
+            for player, position in userdict.items():
+                if position == 'QB':
+                    userQBList.append(player)
+                elif position == 'RB':
+                    userRBList.append(player)
+                elif position == 'WR':
+                    userWRList.append(player)
+                elif position == 'TE':
+                    userTEList.append(player)
 
-                for player, position in top300dict.items():
-                    if position == 'QB':
-                        compQBList.append(player)
-                    elif position == 'RB':
-                        compRBList.append(player)
-                    elif position == 'WR':
-                        compWRList.append(player)
-                    elif position == 'TE':
-                        compTEList.append(player)
+            for player, position in top300dict.items():
+                if position == 'QB':
+                    compQBList.append(player)
+                elif position == 'RB':
+                    compRBList.append(player)
+                elif position == 'WR':
+                    compWRList.append(player)
+                elif position == 'TE':
+                    compTEList.append(player)
 
-                # functions
-                def position_ignore(list, position):
-                    temp = []
-                    if all(top300dict.get(player) == position for player in list):
-                        temp = list
-                    else:
-                        for player in list:
-                            if top300dict.get(player) != position:
-                                temp.append(player)
-                    return temp
+            # functions
+            def position_ignore(list, position):
+                temp = []
+                if all(top300dict.get(player) == position for player in list):
+                    temp = list
+                else:
+                    for player in list:
+                        if top300dict.get(player) != position:
+                            temp.append(player)
+                return temp
 
-                def position_count(list1, list2):
-                    list3 = [value for value in list1 if value in list2]
-                    return list3
+            def position_count(list1, list2):
+                list3 = [value for value in list1 if value in list2]
+                return list3
 
-                # variables
-                draftRound = 0
-                threshold = 3
+            # variables
+            draftRound = 0
+            threshold = 3
 
-                # draft starts here
-                print('The draft is live!')
-                print(self.user_player_list.get(0, END))
-                # randomizes the draft order
-                team_dict = {'userTeam': userTeam, 'Team2': Team2, 'Team3': Team3, 'Team4': Team4,
-                             'Team5': Team5, 'Team6': Team6, 'Team7': Team7, 'Team8': Team8}
-                draftOrder = [team for team in team_dict.keys()]
+            # draft starts here
+            print('The draft is live!')
+            print(self.user_player_list.get(0, END))
+            # randomizes the draft order
+            team_dict = {'userTeam': userTeam, 'Team2': Team2, 'Team3': Team3, 'Team4': Team4,
+                         'Team5': Team5, 'Team6': Team6, 'Team7': Team7, 'Team8': Team8}
+            draftOrder = [team for team in team_dict.keys()]
+            if self.random_checkbox.instate(['selected']):
                 random.shuffle(draftOrder)
-                print(draftOrder)
-                print()
+            else:
+                user_pick = draftOrder.index('userTeam')
+                draftOrder[user_pick], draftOrder[pick_order - 1] = draftOrder[pick_order - 1], draftOrder[user_pick]
 
-                while draftRound < round_count:  # we only want a certain number of rounds
-                    for team in draftOrder:
+            print(draftOrder)
+            teamList = draftOrder
+            roundsDrafted = 0
+            print()
+
+            try:
+                while draftRound < 100:  # we only want a certain number of rounds
+                    for team in teamList:
                         if draftRound != 0:
                             if team == 'userTeam':  # this is your team's pick logic
                                 if len(userQBList) > 0 and ((position_count(userTeam,
@@ -422,61 +438,68 @@ class draftSimulator(Tk):
                                     userList.remove(pick)
                                 compList.remove(pick)
                     print()
-                    draftOrder = draftOrder[::-1]  # reverses the draft order for every other round
+                    teamList = teamList[::-1]  # reverses the draft order for every other round
                     if draftRound % 2 == 0:
                         threshold += 2  # makes the AI choose from a larger pool of players every other round
                     draftRound += 1  # moves on to the next round
-
-                print('Your Team: ' + str(userTeam))
-                userDraftPicks.append(userTeam)
-                print()
-                print('End of Draft')
-                print('\n')
+                    roundsDrafted += 1
             except IndexError:
-                messagebox.showinfo('Damn.',
-                                    'You have entered too few players to draft. Please select additional players or reduce the number of draft rounds.')
-                draftRound = 0
-                threshold = 3
-                break
-
-        if draftRound == round_count:
-            userDraftPicksFinal = [j for i in userDraftPicks for j in i]
-            draft_frequency = {}
-            for player in userDraftPicksFinal:
-                if player in draft_frequency.keys():
-                    draft_frequency[player] += 1
-                else:
-                    draft_frequency[player] = 1
-            for key, value in draft_frequency.items():
-                draft_frequency[key] = (value / draft_count)
-
-            self.results_list.insert(END, '-' * 55)
-            self.results_list.insert(END, '    Name            Position      Draft Frequency')
-            self.results_list.insert(END, '-' * 55)
-            for key, value in sorted(draft_frequency.items(), key=lambda x: x[1], reverse=True):
-                keystring = key + ' ' * (22 - len(str(key)))
-                positionstring = top300dict.get(key) + ' ' * 15
-                self.results_list.insert(END, keystring + positionstring + str(round((100.0 * value), 2)) + '%')
-                # print(keystring, positionstring, str(round((100.0 * value), 2)) + '%')
-            self.results_list.insert(END, '\n' '\n')
-            userDraftPicks.clear()
-            userDraftPicksFinal.clear()
-            draft_frequency.clear()
-            messagebox.showinfo('Nice.', 'Your drafts are complete.')
-            if draftOrder.index('userTeam') == 0:
-                print('You picked 1st.')
-            elif draftOrder.index('userTeam') == 1:
-                print('You picked 2nd.')
-            elif draftOrder.index('userTeam') == 2:
-                print('You picked 3rd.')
-            else:
-                print('You picked ' + str(draftOrder.index('userTeam')) + 'th.')
+                print('Exception')
+                pass
+            print(draftOrder.index('userTeam'))
+            print('Your Team: ' + str(userTeam))
+            userDraftPicks.append(userTeam)
+            print()
+            print('Rounds drafted: ' + str(roundsDrafted))
+            print()
+            print('End of Draft')
             print('\n')
-            testList = []
-            for i in self.user_player_list.get(0, END):
-                testList.append(top300List.index(i))
-            testTuple = tuple(testList)
-            print(testTuple)
+
+        userDraftPicksFinal = [j for i in userDraftPicks for j in i]
+        draft_frequency = {}
+        for player in userDraftPicksFinal:
+            if player in draft_frequency.keys():
+                draft_frequency[player] += 1
+            else:
+                draft_frequency[player] = 1
+        for key, value in draft_frequency.items():
+            draft_frequency[key] = (value / draft_count)
+
+        if self.random_checkbox.instate(['selected']):
+            self.results_list.insert(END, 'The draft orders were randomized.')
+        else:
+            if draftOrder.index('userTeam') == 0:
+                self.results_list.insert(END, 'You picked 1st.')
+            elif draftOrder.index('userTeam') == 1:
+                self.results_list.insert(END, 'You picked 2nd.')
+            elif draftOrder.index('userTeam') == 2:
+                self.results_list.insert(END, 'You picked 3rd.')
+            else:
+                self.results_list.insert(END, 'You picked ' + str(draftOrder.index('userTeam') + 1) + 'th.')
+        self.results_list.insert(END, '\n')
+        self.results_list.insert(END, 'Number of rounds per draft: ' + str(roundsDrafted))
+        self.results_list.insert(END, '\n')
+        self.results_list.insert(END, '-' * 55)
+        self.results_list.insert(END, '    Name            Position      Draft Frequency')
+        self.results_list.insert(END, '-' * 55)
+        for key, value in sorted(draft_frequency.items(), key=lambda x: x[1], reverse=True):
+            keystring = key + ' ' * (22 - len(str(key)))
+            positionstring = top300dict.get(key) + ' ' * 15
+            self.results_list.insert(END, keystring + positionstring + str(round((100.0 * value), 2)) + '%')
+            # print(keystring, positionstring, str(round((100.0 * value), 2)) + '%')
+        self.results_list.insert(END, '\n' '\n')
+        userDraftPicks.clear()
+        userDraftPicksFinal.clear()
+        draft_frequency.clear()
+        messagebox.showinfo('Nice.', 'Your drafts are complete.')
+        print('\n')
+        testList = []
+        for i in self.user_player_list.get(0, END):
+            testList.append(top300List.index(i))
+        testTuple = tuple(testList)
+        print(testTuple)
+        print(self.random_checkbox.instate(['selected']))
+
 
 
 root = Tk()
