@@ -1,6 +1,0 @@
-This python application uses two packages that do not come with Python.  You will need to install them before you are able to run the app.
-
-Instructions (Mac):
-1. Open Terminal.
-2. Type "pip install requests". This will install the "requests" package.
-3. Type "pip install bs4". This will install the "bs4" package.
