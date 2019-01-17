@@ -53,7 +53,7 @@ def findstat(haystack, needle, n):
 
 
 playerCount = 0
-weeks = 1
+weeks = 16
 # begin looping over each week of the season
 for week in range(weeks):
     print('Compiling Week ' + str(week + 1) + ' stats...')
@@ -149,18 +149,6 @@ for week in range(weeks):
 
         playerCount += 50
 
-    # put players and positions into master dictionary
-    playersAndPositions = dict(zip(playerList, positionList))
-    for player, position in playersAndPositions.items():
-        if player not in positionDict.keys():
-            positionDict.update({player: position})
-
-    # put players and teams into master dictionary
-    playersAndTeams = dict(zip(playerList, playerTeamList))
-    for player, team in playersAndTeams.items():
-        if player not in playerTeamDict.keys():
-            playerTeamDict.update({player: team})
-
     # put players and stats into master dictionary lists, 1 for each week
     playersAndPoints = dict(zip(playerList, pointsList))
     playerPointDicts.append(playersAndPoints)
@@ -174,8 +162,22 @@ for week in range(weeks):
     playersAndTars = dict(zip(playerList, tarList))
     playerTarDicts.append(playersAndTars)
 
-# put players and opponents into master dictionary
-playersAndOpps = dict(zip(playerList, playerOppList))
+    # now that we have a list of players updated to last week, let's make the final dictionaries
+    if week + 1 == weeks:
+        # put players and positions into master dictionary
+        playersAndPositions = dict(zip(playerList, positionList))
+        for player, position in playersAndPositions.items():
+            if player not in positionDict.keys():
+                positionDict.update({player: position})
+
+        # put players and teams into master dictionary
+        playersAndTeams = dict(zip(playerList, playerTeamList))
+        for player, team in playersAndTeams.items():
+            if player not in playerTeamDict.keys():
+                playerTeamDict.update({player: team})
+
+        # put players and opponents into master dictionary
+        playersAndOpps = dict(zip(playerList, playerOppList))
 
 # create dictionaries that organizes players with their weekly stats
 for player in positionDict:
@@ -337,7 +339,8 @@ for player, position in positionDict.items():
     oppStrength = sorted(oppStrengthDict.keys(), key=oppStrengthDict.__getitem__, reverse=True)
     oppStrengthRank = oppStrength.index(str(playerOpp) + ' vs. ' + str(position)) + 1
     oppStrengthRankDict.update({player: oppStrengthRank})
-    overallRank = (0.7 * averageRank) + (0.2 * usageRank) + (0.1 * ceilingRank)  # + (0.025*floorRank) + (0.025*stdRank)
+    overallRank = (0.7 * averageRank) + (0.2 * usageRank) + (0.025 * ceilingRank) + (0.025 * floorRank) + (
+                0.025 * stdRank) + (0.025 * oppStrengthRank)
     overallPlayerRankDict.update({player: overallRank})
 
 overallPlayerRanks = sorted(overallPlayerRankDict.keys(), key=overallPlayerRankDict.__getitem__)
@@ -345,8 +348,10 @@ overallPlayerRanks = sorted(overallPlayerRankDict.keys(), key=overallPlayerRankD
 for i in range(len(overallPlayerRanks)):
     print(str(i + 1) + ': ' + overallPlayerRanks[i])
     print('     Avg Rank: ' + str(averagePlayerRankDict.get(overallPlayerRanks[i])))
+    print('     Std Rank: ' + str(stdPlayerRankDict.get(overallPlayerRanks[i])))
     print('     Usage Rank: ' + str(usagePlayerRankDict.get(overallPlayerRanks[i])))
     print('     Ceiling Rank: ' + str(ceilingPlayerRankDict.get(overallPlayerRanks[i])))
+    print('     Floor Rank: ' + str(floorPlayerRankDict.get(overallPlayerRanks[i])))
     print('     OppStrength Rank: ' + str(oppStrengthRankDict.get(overallPlayerRanks[i])))
 
 
@@ -377,6 +382,7 @@ def playerCheck(name):
     # if player is never set to False, we know it's a player
     if player:
         return name
+
 
 # set up request to site for salaries, can use draftkings or fanduel with site variable
 sites = ['Draftkings', 'FanDuel']
