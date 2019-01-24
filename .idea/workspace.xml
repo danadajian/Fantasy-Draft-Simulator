@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0eaacad-6123-4698-bc0c-34e8f2f0cd1c" name="Default" comment="Deleting old file">
-      <change afterPath="$PROJECT_DIR$/DFS Optimizer/New Optimizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DFS Optimizer.py" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/DFS Optimizer/DFS Lineup Optimizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compilestats/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/getsalaries/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/getstats/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pointsallowed/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Fun.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Fun.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DFS Optimizer/DFS Optimizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DFS Optimizer/New Optimizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/__init__.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,10 +23,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DFS Optimizer/New Optimizer.py">
+        <entry file="file://$PROJECT_DIR$/DFS Optimizer/DFS Lineup Optimizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41">
-              <caret line="399" column="17" lean-forward="true" selection-start-line="399" selection-start-column="17" selection-end-line="399" selection-end-column="17" />
+            <state relative-caret-position="136">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
+              <folding>
+                <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/getsalaries/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/getstats/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="45" column="10" selection-start-line="45" selection-start-column="10" selection-end-line="45" selection-end-column="10" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -26,10 +59,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/functions/__init__.py">
+        <entry file="file://$PROJECT_DIR$/compilestats/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="50" column="16" lean-forward="true" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
+            <state relative-caret-position="358">
+              <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
+              <folding>
+                <element signature="e#0#22#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -45,21 +81,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tyreek</find>
-      <find>point</find>
-      <find>43.1</find>
-      <find>dan bailey</find>
-      <find>appliedPOints</find>
-      <find>playertableStat appliedPoints&quot;&gt;--&lt;</find>
-      <find>dan bail</find>
-      <find>eric</find>
-      <find>weeks</find>
-      <find>playerList</find>
-      <find>oppstrengthdict</find>
-      <find>playerOppList</find>
-      <find>positionD</find>
-      <find>lastWe</find>
-      <find>playersAndOpps</find>
       <find>rank</find>
       <find>Rank</find>
       <find>kamara</find>
@@ -75,6 +96,21 @@
       <find>positionDict</find>
       <find>playerChec</find>
       <find>print(</find>
+      <find>sorted(</find>
+      <find>getmax</find>
+      <find>teamName</find>
+      <find>getTotal</find>
+      <find>validLineup</find>
+      <find>get_total</find>
+      <find>player</find>
+      <find>findall</find>
+      <find>&quot; target=&quot;_blank&quot;&gt;</find>
+      <find>&lt;td align=&quot;right&quot;&gt;</find>
+      <find>fitzp</find>
+      <find>2500</find>
+      <find>fitz</find>
+      <find>josh</find>
+      <find>N/A</find>
     </findStrings>
     <replaceStrings>
       <replace>top200List</replace>
@@ -83,6 +119,8 @@
       <replace>team</replace>
       <replace>top300</replace>
       <replace>Score</replace>
+      <replace>get_total</replace>
+      <replace>valid_lineup</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -105,19 +143,24 @@
         <option value="$PROJECT_DIR$/new ideas.txt" />
         <option value="$PROJECT_DIR$/Fantasy Draft Simulator App.py" />
         <option value="$PROJECT_DIR$/Installation Intructions.txt" />
-        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
         <option value="$PROJECT_DIR$/functions/functions.py" />
         <option value="$PROJECT_DIR$/DFS Optimizer.py" />
         <option value="$PROJECT_DIR$/DFS Optimizer/DFS Optimizer.py" />
         <option value="$PROJECT_DIR$/functions/__init__.py" />
         <option value="$PROJECT_DIR$/DFS Optimizer/New Optimizer.py" />
+        <option value="$PROJECT_DIR$/pointsallowed/__init__.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+        <option value="$PROJECT_DIR$/getstats/__init__.py" />
+        <option value="$PROJECT_DIR$/getsalaries/__init__.py" />
+        <option value="$PROJECT_DIR$/DFS Optimizer/DFS Lineup Optimizer.py" />
+        <option value="$PROJECT_DIR$/compilestats/__init__.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="1134" />
-    <option name="height" value="1047" />
+    <option name="x" value="-9" />
+    <option name="width" value="1135" />
+    <option name="height" value="1049" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -130,13 +173,37 @@
         <subPane>
           <expand>
             <path>
-              <item name="Fun" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Fun" type="462c0819:PsiDirectoryNode" />
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Fun" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Fun" type="462c0819:PsiDirectoryNode" />
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="compilestats" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
               <item name="DFS Optimizer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="getsalaries" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="getstats" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+            <path>
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
           </expand>
           <select />
@@ -146,8 +213,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Fantasy Draft Simulator App.py" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -170,8 +237,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.New Optimizer">
-    <configuration name="DFS Optimizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.__init__ (1)">
+    <configuration name="DFS Lineup Optimizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Fun" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -179,32 +246,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DFS Optimizer" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Dan\Dropbox\Fun\DFS Optimizer\DFS Optimizer.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Fantasy Draft Simulator App" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Fun" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Fantasy Draft Simulator App.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DFS Optimizer/DFS Lineup Optimizer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -225,7 +271,49 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DFS Optimizer/New Optimizer.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\matr06821\Documents\Personal\Fantasy-Draft-Simulator\DFS Optimizer\DFS Lineup Optimizer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="__init__ (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fun" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/compilestats" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/compilestats/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fun" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/getsalaries" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/getsalaries/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -256,17 +344,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Fantasy Draft Simulator App" />
-      <item itemvalue="Python.DFS Optimizer" />
       <item itemvalue="Python.scratch" />
       <item itemvalue="Python.New Optimizer" />
+      <item itemvalue="Python.DFS Lineup Optimizer" />
+      <item itemvalue="Python.__init__" />
+      <item itemvalue="Python.__init__ (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.New Optimizer" />
-        <item itemvalue="Python.DFS Optimizer" />
+        <item itemvalue="Python.__init__ (1)" />
+        <item itemvalue="Python.DFS Lineup Optimizer" />
+        <item itemvalue="Python.__init__" />
         <item itemvalue="Python.scratch" />
-        <item itemvalue="Python.Fantasy Draft Simulator App" />
+        <item itemvalue="Python.New Optimizer" />
       </list>
     </recent_temporary>
   </component>
@@ -302,16 +392,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.32889125" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17713153" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.38786566" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39761648" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39660057" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32848486" />
@@ -380,36 +470,12 @@
     <entry file="file://$USER_HOME$/Fantasy Draft Simulator App.py" />
     <entry file="file://$PROJECT_DIR$/Fantasy Draft Simulator.py" />
     <entry file="file://$PROJECT_DIR$/playground.py" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/tkinter/__init__.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py" />
-    <entry file="file://$PROJECT_DIR$/Installation Intructions.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new ideas.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="72" selection-start-column="72" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fantasy Draft Simulator App.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="52" column="10" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Installation Intructions.txt" />
+    <entry file="file://$PROJECT_DIR$/new ideas.txt" />
+    <entry file="file://$PROJECT_DIR$/Fantasy Draft Simulator App.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="283">
@@ -417,34 +483,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
-    <entry file="file://$PROJECT_DIR$/functions/functions.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DFS Optimizer/DFS Optimizer.py">
+    <entry file="file://$PROJECT_DIR$/functions/functions.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="275" column="39" selection-start-line="275" selection-start-column="39" selection-end-line="275" selection-end-column="39" />
+        <state relative-caret-position="143">
+          <caret line="321" selection-start-line="321" selection-end-line="321" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/DFS Optimizer/DFS Optimizer.py" />
+    <entry file="file://$PROJECT_DIR$/pointsallowed/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="29" lean-forward="true" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="68" column="13" lean-forward="true" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DFS Optimizer/New Optimizer.py">
+    <entry file="file://$PROJECT_DIR$/getstats/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="399" column="17" lean-forward="true" selection-start-line="399" selection-start-column="17" selection-end-line="399" selection-end-column="17" />
+        <state relative-caret-position="289">
+          <caret line="45" column="10" selection-start-line="45" selection-start-column="10" selection-end-line="45" selection-end-column="10" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions/__init__.py">
+    <entry file="file://$PROJECT_DIR$/getsalaries/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="50" column="16" lean-forward="true" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
+        <state relative-caret-position="148">
+          <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DFS Optimizer/DFS Lineup Optimizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compilestats/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
