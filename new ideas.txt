@@ -1,4 +1,0 @@
-1. Add functionality to catch entering draft pick other than between 1-8
-2. add option to choose how many teams are in the draft
-3. add feature to save, export, and import player list ranked by preference
-4. add info section to explain how to use the app and what it does
