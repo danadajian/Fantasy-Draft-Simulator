@@ -1,6 +1,7 @@
 import requests
 import statistics as s
 from bs4 import BeautifulSoup
+from functions import *
 
 # define lists and dicts to be populated later
 playerPointDicts = []
@@ -10,6 +11,7 @@ playerRecDicts = []
 playerTarDicts = []
 positionDict = {}
 playerTeamDict = {}
+finalPlayerList = []
 playerOppList = []
 playerMasterPointDict = {}
 playerMasterRushDict = {}
@@ -32,32 +34,9 @@ teamNames = {'Arizona': 'Cardinals', 'Atlanta': 'Falcons', 'Baltimore': 'Ravens'
              'Philadelphia': 'Eagles', 'Pittsburgh': 'Steelers', 'San Francisco': '49ers', 'Seattle': 'Seahawks',
              'Tampa Bay': 'Buccaneers', 'Tennessee': 'Titans', 'Washington': 'Redskins'}
 
-
-# defines function that finds all string indices of a substring
-def findAll(string, substring, indexList):
-    index = -1
-    while True:
-        index = string.find(substring, index + 1)
-        if index == -1:
-            break
-        indexList.append(index)
-
-
-# defines function that finds the nth index of a substring
-def findstat(haystack, needle, n):
-    statIndex = haystack.find(needle)
-    i = 1
-    while i < n:
-        statIndex = haystack.find(needle, statIndex + len(needle))
-        i += 1
-    lower = statIndex + len(needle)
-    upper = haystack.find('<', lower)
-    return haystack[lower: upper]
-
-
 # sets first n weeks of data to be considered
 playerCount = 0
-weeks = 10
+weeks = 2
 # begin looping over each week of the season
 for week in range(weeks):
     print('Compiling Week ' + str(week + 1) + ' stats...')
@@ -71,7 +50,7 @@ for week in range(weeks):
     pointsList = []
     playerCount = 0
     # begin looping over ESPN pages 50 players at a time up to 250
-    while playerCount <= 250:
+    while playerCount <= 200:
         # make http request to ESPN for full page html
         playerSession = requests.session()
         playerUrl = 'http://games.espn.com/ffl/leaders?&scoringPeriodId=' + str(
@@ -190,9 +169,10 @@ for week in range(weeks):
         for player, team in playersAndTeams.items():
             if player not in playerTeamDict.keys():
                 playerTeamDict.update({player: team})
+        finalPlayerList = playerList
 
-        # put players and opponents into master dictionary
-        playersAndOpps = dict(zip(playerList, playerOppList))
+# put players and opponents into master dictionary
+playersAndOpps = dict(zip(finalPlayerList, playerOppList))
 
 # create dictionaries that organizes players with their weekly stats
 for player in positionDict.keys():
@@ -254,56 +234,6 @@ for position in positions:
     teamsAndPointsAllowed = dict(zip(teamList, pointsAllowedList))
     pointsAllowedDictList.append(teamsAndPointsAllowed)
 
-
-# define functions that find max, min, avg, and std of list, ignoring weird entries
-def getmax(yourList):
-    newList = []
-    for item in yourList:
-        if item != '--' and item is not None:
-            newList.append(item)
-    newList = map(float, newList)
-    try:
-        return max(newList)
-    except ValueError:
-        return 0
-
-
-def getmin(yourList):
-    newList = []
-    for item in yourList:
-        if item != '--' and item is not None:
-            newList.append(item)
-    newList = map(float, newList)
-    try:
-        return min(newList)
-    except ValueError:
-        return 0
-
-
-def getavg(yourList):
-    newList = []
-    for item in yourList:
-        if item != '--' and item is not None:
-            newList.append(item)
-    newList = map(float, newList)
-    try:
-        return s.mean(newList)
-    except ValueError:
-        return 0
-
-
-def getstd(yourList):
-    newList = []
-    for item in yourList:
-        if item != '--' and item is not None:
-            newList.append(item)
-    newList = map(float, newList)
-    try:
-        return round(s.stdev(newList), 1)
-    except ValueError:
-        return 0
-
-
 # create master lists to be populated
 playerMaxPointsDict = {}
 playerMinPointsDict = {}
@@ -360,7 +290,7 @@ def playerCheck(name):
                     return str(team) + ' D/ST'
         else:
             # check for the city and team name in the string
-            if city in name and teamNames.get(city) in name:
+            if city in name or teamNames.get(city) in name:
                 player = False
                 team = teamNames.get(city)
                 return str(team) + ' D/ST'
@@ -418,118 +348,93 @@ for site in sites:
     print(str(site) + ' salaries:')
     print(dfsPlayersAndSalaries)
 
-if siteSalaries[0]:
+# set salary dict to be FanDuel for now
+playerSalaries = siteSalaries[1]
+
+
+def getTotal(players, data):
+    dataList = []
+    for player in players:
+        dataList.append(data.get(player))
+    return sum(dataList)
+
+
+playerListForLineup = list(playerSalaries.keys())
+
+playerQBList = []
+playerRBList = []
+playerWRList = []
+playerTEList = []
+playerFLEXList = []
+playerDSTList = []
+
+for player in playerListForLineup:
+    if positionDict.get(player) == 'QB':
+        playerQBList.append(player)
+    if positionDict.get(player) == 'RB':
+        playerRBList.append(player)
+        playerFLEXList.append(player)
+    if positionDict.get(player) == 'WR':
+        playerWRList.append(player)
+        playerFLEXList.append(player)
+    if positionDict.get(player) == 'TE':
+        playerTEList.append(player)
+        playerFLEXList.append(player)
+    if positionDict.get(player) == 'D/ST':
+        playerDSTList.append(player)
+
+# print(len(playerQBList))
+# print(len(playerRBList))
+# print(len(playerWRList))
+# print(len(playerTEList))
+# print(len(playerFLEXList) - 3)
+# print(len(playerDSTList))
+
+if playerSalaries:
     # create optimal DFS lineup!
-    # optimize lineup based on maximizing marginal projected point increase per salary increase
-    # start by selecting the highest overall proj pts per salary, and then anchor to that player
-    # to minimize proj pts decrease per salary decrease
+    # maximize total projected points with constraint of salary cap
     optimalLineup = {}
+    # set salary cap to 50k for Draftkings and 60k for Fanduel
+    salaryCap = 60000
+    bestLineup = []
+    maxPoints = 0
 
-    # sort players with scores in descending order
-    playerScores = {}
-    sortedScores = sorted(overallPlayerScoresDict, key=overallPlayerScoresDict.__getitem__, reverse=True)
-    for player in sortedScores:
-        playerScores.update({player: overallPlayerScoresDict.get(player)})
-    print(playerScores)
+    for qb in playerQBList:
+        salaryTotal = 0
+        while salaryTotal <= salaryCap:
+            for rb1 in playerRBList:
+                for rb2 in playerRBList:
+                    if rb1 != rb2:
+                        for wr1 in playerWRList:
+                            for wr2 in playerWRList:
+                                if wr1 != wr2:
+                                    for wr3 in playerWRList:
+                                            if wr3 not in {wr1, wr2}:
+                                                for te in playerTEList:
+                                                    for flex in playerFLEXList:
+                                                        if flex not in {rb1, rb2, wr1, wr2, wr3, te}:
+                                                            for dst in playerDSTList:
+                                                                thisLineup = [qb, rb1, rb2, wr1, wr2, wr3, te, flex, dst]
+                                                                salaryTotal = getTotal(thisLineup, playerSalaries)
+                                                                thisPointTotal = getTotal(thisLineup, overallPlayerScoresDict)
+                                                                if thisPointTotal > maxPoints:
+                                                                    bestLineup = thisLineup
+                                                                    maxPoints = thisPointTotal
 
-    # set salary dict to be DraftKings for now
-    draftKingsSalaries = siteSalaries[0]
+    print(bestLineup)
+    print(round(maxPoints, 1))
+    print(getTotal(bestLineup, playerSalaries))
 
-    # sort players with score per salary in descending order
-    playerPointsPerSalary = {}
-    for player in sortedScores:
-        if player in draftKingsSalaries.keys():
-            playerScore = playerScores.get(player)
-            playerSalary = draftKingsSalaries.get(player)
-            playerPointsPerSalary.update({player: playerScore / playerSalary})
-    sortedPointsPerSalary = sorted(playerPointsPerSalary, key=playerPointsPerSalary.__getitem__, reverse=True)
-
-    # draft first player with highest pts per salary ratio
-    playerPicked = sortedPointsPerSalary[0]
-
-    # set salary cap to 50k (Fanduel will be 60k)
-    remainingSalary = 50000
-    takenPositions = []
-
-    # loop 9 times to get all 9 players in the lineup
-    for i in range(9):
-        if i > 0:
-            # determine player pool to select remaining players from
-            playerPool = []
-            for player in sortedPointsPerSalary:
-                if player not in optimalLineup.values() and positionDict.get(player) not in takenPositions:
-                    playerPool.append(player)
-
-            # calculate each player's marginal salary decrease per projected pts decrease from the last player picked
-            marginalPointsPerDollar = {}
-            for player in playerPool:
-                marginalPoints = playerScores.get(playerPicked) - playerScores.get(player)
-                marginalSalary = draftKingsSalaries.get(playerPicked) - draftKingsSalaries.get(player)
-                if marginalSalary == 0:
-                    marginalSalary = 1
-                marginalPointsPerSalary = marginalPoints / marginalSalary
-                if marginalPointsPerSalary > 0:
-                    marginalPointsPerDollar.update({player: marginalPointsPerSalary})
-
-            # sort each position by descending overall score per salary dollar
-            sortedMarginalPoints = sorted(marginalPointsPerDollar, key=marginalPointsPerDollar.__getitem__)
-            playerPicked = sortedMarginalPoints[0]
-
-        # logic for putting players in the lineup and "paying" for them each time
-        if positionDict.get(playerPicked) == 'RB':
-            if not optimalLineup.get('RB1'):
-                optimalLineup.update({'RB1': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-            elif not optimalLineup.get('RB2'):
-                optimalLineup.update({'RB2': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-            elif not optimalLineup.get('FLEX'):
-                optimalLineup.update({'FLEX': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-        elif positionDict.get(playerPicked) == 'WR':
-            if not optimalLineup.get('WR1'):
-                optimalLineup.update({'WR1': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-            elif not optimalLineup.get('WR2'):
-                optimalLineup.update({'WR2': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-            elif not optimalLineup.get('WR3'):
-                optimalLineup.update({'WR3': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-            elif not optimalLineup.get('FLEX'):
-                optimalLineup.update({'FLEX': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-        elif positionDict.get(playerPicked) == 'TE':
-            if not optimalLineup.get('TE'):
-                optimalLineup.update({'TE': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-            elif not optimalLineup.get('FLEX'):
-                optimalLineup.update({'FLEX': playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-        else:
-            if not optimalLineup.get(positionDict.get(playerPicked)):
-                optimalLineup.update({positionDict.get(playerPicked): playerPicked})
-                remainingSalary -= draftKingsSalaries.get(playerPicked)
-
-        # implement a check for when position slots are full
-        if 'QB' in optimalLineup.keys() and 'QB' not in takenPositions:
-            takenPositions.append('QB')
-        if 'RB2' in optimalLineup.keys() and 'FLEX' in optimalLineup.keys() and 'RB' not in takenPositions:
-            takenPositions.append('RB')
-        if 'WR3' in optimalLineup.keys() and 'FLEX' in optimalLineup.keys() and 'WR' not in takenPositions:
-            takenPositions.append('WR')
-        if 'TE' in optimalLineup.keys() and 'FLEX' in optimalLineup.keys() and 'TE' not in takenPositions:
-            takenPositions.append('TE')
-        if 'D/ST' in optimalLineup.keys() and 'D/ST' not in takenPositions:
-            takenPositions.append('D/ST')
-
-    # print output!
-    positionOrder = ['QB', 'RB1', 'RB2', 'WR1', 'WR2', 'WR3', 'TE', 'FLEX', 'D/ST']
-    for pos in positionOrder:
-        print(optimalLineup.get(pos))
-    print('Remaining salary: ' + str(remainingSalary))
-
-    # make sure final code gets current week and sets "weeks" to that number
-    # put an "if projected points from ESPN = 0, exclude this player"
-else:
-    print('No salary data available.')
+# why is there only the Rams D???
+#
+#     # print output!
+#     positionOrder = ['QB', 'RB1', 'RB2', 'WR1', 'WR2', 'WR3', 'TE', 'FLEX', 'D/ST']
+#     for pos in positionOrder:
+#         player = optimalLineup.get(pos)
+#         print(str(pos) + ': ' + str(player) + ' - $' + str(playerSalaries.get(player)))
+#     print('Remaining salary: ' + str(salaryCap - maxPointsSalary))
+#
+#     # make sure final code gets current week and sets "weeks" to that number
+#     # put an "if projected points from ESPN = 0, exclude this player"
+# else:
+#     print('No salary data available.')
