@@ -124,12 +124,8 @@ for player, position in positionDict.items():
         oppPointsAllowed = oppStrengthDict.get(str(playerOpp) + ' vs. ' + str(position))
         # calculate adjusted projected points based on other data
         overallScoreFloat = (0.7 * avgPoints) + (0.2 * avgUsage) + (0.025 * ceiling) + (0.025 * floor) + (
-                0.025 * std) + (
-                                    0.025 * oppPointsAllowed)
+                0.025 * std) + (0.025 * oppPointsAllowed)
         overallScore = float(round(overallScoreFloat, 2))
         overallPlayerScoresDict.update({player: overallScore})
 
-sortedScores = sorted(overallPlayerScoresDict, key=overallPlayerScoresDict.__getitem__)
-sortedPlayersAndScores = {}
-for player in sortedScores:
-    sortedPlayersAndScores.update({player: overallPlayerScoresDict.get(player)})
+sortedScores = sorted(overallPlayerScoresDict, key=overallPlayerScoresDict.__getitem__, reverse=True)

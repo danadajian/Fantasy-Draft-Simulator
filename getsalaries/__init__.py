@@ -40,7 +40,7 @@ siteSalaries = []
 for site in sites:
     # make http request to scrape html
     dfsSession = requests.session()
-    dfsUrl = 'http://rotoguru1.com/cgi-bin/fyday.pl?week=' + str(weeks) + '&game=' + str(site)
+    dfsUrl = 'http://rotoguru1.com/cgi-bin/fyday.pl?week=' + str(weeks + 1) + '&game=' + str(site)
     dfsReq = dfsSession.get(dfsUrl)
     dfsDoc = BeautifulSoup(dfsReq.content, 'html.parser')
     dfsText = str(dfsDoc.get_text)
@@ -64,7 +64,7 @@ for site in sites:
             continue
         else:
             dfsAmount = dfsSalaryText[1:]
-            dfsSalary = int(dfsAmount[:1] + dfsAmount[2:])
+            dfsSalary = int(dfsAmount[:dfsAmount.find(',')] + dfsAmount[dfsAmount.find(',') + 1:])
         dfsSalaryList.append(dfsSalary)
         result = player_check(dfsPlayer)
         if result.endswith('D/ST'):
@@ -84,5 +84,3 @@ for site in sites:
     print('Acquired ' + str(site) + ' salaries!')
     print(dfsPlayersAndSalaries)
 
-# set salary dict to be FanDuel for now
-playerSalaries = siteSalaries[1]

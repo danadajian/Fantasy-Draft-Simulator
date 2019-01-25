@@ -43,7 +43,7 @@ def find_stat(haystack, needle, n):
 
 # sets first n weeks of data to be considered
 playerCount = 0
-weeks = 14
+weeks = 8
 # begin looping over each week of the season
 for week in range(weeks):
     print('Compiling Week ' + str(week + 1) + ' stats...')
