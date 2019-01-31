@@ -1,6 +1,7 @@
-from itertools import combinations
+from itertools import combinations, permutations
 from compilestats import *
 from getsalaries import *
+from emailresults import send_email
 
 
 def get_total(players, data):
@@ -8,6 +9,7 @@ def get_total(players, data):
     return sum(data_list)
 
 
+lineupResults = ''
 for playerSalaries in siteSalaries:
     if playerSalaries:
         pointsPercentile = round(0.50 * len(sortedScores))
@@ -54,15 +56,21 @@ for playerSalaries in siteSalaries:
             for rbs in combinations(playerRBList, 3):
                 rbPoints = get_total(rbs, overallPlayerScoresDict)
                 rbSalary = get_total(rbs, playerSalaries)
-                if qbPoints + rbPoints + maxWRPoints + maxTEPoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + minWRSalary + minTESalary + minDSTSalary <= salaryCap:
+                potentialMaxPoints = qbPoints + rbPoints + maxWRPoints + maxTEPoints + maxDSTPoints
+                potentialMaxSalary = qbSalary + rbSalary + minWRSalary + minTESalary + minDSTSalary
+                if potentialMaxPoints > maxPoints and potentialMaxSalary <= salaryCap:
                     for wrs in combinations(playerWRList, 3):
                         wrPoints = get_total(wrs, overallPlayerScoresDict)
                         wrSalary = get_total(wrs, playerSalaries)
-                        if qbPoints + rbPoints + wrPoints + maxTEPoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + wrSalary + minTESalary + minDSTSalary <= salaryCap:
+                        potentialMaxPoints = qbPoints + rbPoints + wrPoints + maxTEPoints + maxDSTPoints
+                        potentialMaxSalary = qbSalary + rbSalary + wrSalary + minTESalary + minDSTSalary
+                        if potentialMaxPoints > maxPoints and potentialMaxSalary <= salaryCap:
                             for te in playerTEList:
                                 tePoints = overallPlayerScoresDict.get(te)
                                 teSalary = playerSalaries.get(te)
-                                if qbPoints + rbPoints + wrPoints + tePoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + wrSalary + teSalary + minDSTSalary <= salaryCap:
+                                potentialMaxPoints = qbPoints + rbPoints + wrPoints + tePoints + maxDSTPoints
+                                potentialMaxSalary = qbSalary + rbSalary + wrSalary + teSalary + minDSTSalary
+                                if potentialMaxPoints > maxPoints and potentialMaxSalary <= salaryCap:
                                     for dst in playerDSTList:
                                         dstPoints = overallPlayerScoresDict.get(dst)
                                         dstSalary = playerSalaries.get(dst)
@@ -124,14 +132,37 @@ for playerSalaries in siteSalaries:
 
         # print output!
         positionOrder = ['QB', 'RB1', 'RB2', 'WR1', 'WR2', 'WR3', 'TE', 'FLEX', 'D/ST']
-        optimalLineup = dict(zip(positionOrder, bestLineup))
-        for position, player in optimalLineup.items():
-            print(str(position) + ': ' + str(player) + ' - $' + str(playerSalaries.get(player)))
-        print('Total projected points: ' + str(round(maxPoints, 2)))
-        print('Remaining salary: ' + str(salaryCap - get_total(bestLineup, playerSalaries)))
-        print('\n')
+        rb1Score = overallPlayerScoresDict.get(bestLineup[1])
+        rb2Score = overallPlayerScoresDict.get(bestLineup[2])
+        wr1Score = overallPlayerScoresDict.get(bestLineup[3])
+        wr2Score = overallPlayerScoresDict.get(bestLineup[4])
+        wr3Score = overallPlayerScoresDict.get(bestLineup[5])
+        teScore = overallPlayerScoresDict.get(bestLineup[6])
+        flexScore = overallPlayerScoresDict.get(bestLineup[7])
 
-        # make sure final code gets current week and sets "weeks" to that number
-        # put an "if projected points from ESPN = 0, exclude this player"
+        optimalLineup = dict(zip(positionOrder, bestLineup))
+        playerLineup = ''
+        if siteSalaries.index(playerSalaries) == 0:
+            playerLineup += 'Draftkings Lineup:' + '\n'
+        else:
+            playerLineup += 'Fanduel Lineup:' + '\n'
+        for position, player in optimalLineup.items():
+            playerLineup += str(position) + ': ' + str(player) + ' - $' + str(playerSalaries.get(player)) + '\n'
+        playerLineup += 'Total projected points: ' + str(round(maxPoints, 2)) + '\n'
+        playerLineup += 'Remaining salary: ' + str(salaryCap - get_total(bestLineup, playerSalaries)) + '\n'
+        playerLineup += '\n'
+
+        lineupResults += playerLineup
+
     else:
         print('No salary data available.')
+
+if lineupResults:
+    send_email(from_addr='fantasyoptimizationresults@gmail.com', to_addr_list=['danadajian@gmail.com'],
+               cc_addr_list=[''], subject='Your Optimized Week ' + str(weeks + 1) + ' DFS Lineups!',
+               message=lineupResults, login='fantasyoptimizationresults', password='optimize123')
+
+    print('Lineups complete and results emailed!')
+
+# make sure final code gets current week and sets "weeks" to that number
+# put an "if projected points from ESPN = 0, exclude this player"
