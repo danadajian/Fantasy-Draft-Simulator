@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0eaacad-6123-4698-bc0c-34e8f2f0cd1c" name="Default" comment="Deleting old file">
-      <change afterPath="$PROJECT_DIR$/emailresults/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Optimizer Tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DFS Lineup Optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Optimizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Optimizer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Optimizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="161" column="118" selection-start-line="161" selection-start-column="118" selection-end-line="161" selection-end-column="118" />
+            <state relative-caret-position="64">
+              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
               </folding>
@@ -27,13 +27,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/getsalaries/__init__.py">
+        <entry file="file://$PROJECT_DIR$/Optimizer Tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="42" column="61" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="75" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="30" selection-start-column="30" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -49,14 +46,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Rank</find>
-      <find>kamara</find>
-      <find>cook</find>
-      <find>ceilingPlayer</find>
-      <find>({</find>
-      <find>chiefs</find>
-      <find>-</find>
-      <find>thomas</find>
       <find>kamar</find>
       <find>mah</find>
       <find>D/ST</find>
@@ -79,6 +68,14 @@
       <find>josh</find>
       <find>N/A</find>
       <find>valid_line</find>
+      <find>maxRbP</find>
+      <find>minRBSa</find>
+      <find>maxPoints</find>
+      <find>i</find>
+      <find>[i</find>
+      <find>combinations</find>
+      <find>overall</find>
+      <find>playerSa</find>
     </findStrings>
     <replaceStrings>
       <replace>top200List</replace>
@@ -123,14 +120,16 @@
         <option value="$PROJECT_DIR$/compilestats/__init__.py" />
         <option value="$PROJECT_DIR$/DFS Optimizer/DFS Lineup Optimizer.py" />
         <option value="$PROJECT_DIR$/emailresults/__init__.py" />
+        <option value="$PROJECT_DIR$/Optimizer Tests.py" />
         <option value="$PROJECT_DIR$/Optimizer.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-1" />
+    <option name="y" value="-23" />
+    <option name="width" value="1296" />
+    <option name="height" value="696" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -138,6 +137,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -152,11 +152,6 @@
             </path>
             <path>
               <item name="Fun" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Fun" type="462c0819:PsiDirectoryNode" />
-              <item name="getsalaries" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Fun" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
             <path>
@@ -168,7 +163,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -212,6 +206,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="C:\Users\Dan\Dropbox\Fun\Optimizer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Optimizer Tests" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fun" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Optimizer Tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -283,41 +298,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Fun" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/getsalaries" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/getsalaries/__init__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.DFS Lineup Optimizer" />
-      <item itemvalue="Python.__init__" />
       <item itemvalue="Python.__init__ (1)" />
       <item itemvalue="Python.Optimizer" />
       <item itemvalue="Python.__init__ (2)" />
+      <item itemvalue="Python.Optimizer Tests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Optimizer" />
+        <item itemvalue="Python.Optimizer Tests" />
         <item itemvalue="Python.__init__ (2)" />
         <item itemvalue="Python.DFS Lineup Optimizer" />
         <item itemvalue="Python.__init__ (1)" />
-        <item itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
@@ -353,22 +347,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="1913" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25164112" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.16446403" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49840087" visible="true" weight="0.3501094" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49840087" weight="0.5737122" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39653304" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32848486" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.26477024" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.11809318" />
       <window_info anchor="bottom" id="Python Console" order="8" sideWeight="0.49934897" weight="0.32827735" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.4627507" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.4617068" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50159913" side_tool="true" weight="0.38786566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -499,6 +493,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/getsalaries/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="38" column="17" lean-forward="true" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/emailresults/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -506,20 +510,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/getsalaries/__init__.py">
+    <entry file="file://$PROJECT_DIR$/Optimizer Tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="42" column="61" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="30" selection-start-column="30" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Optimizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="161" column="118" selection-start-line="161" selection-start-column="118" selection-end-line="161" selection-end-column="118" />
+        <state relative-caret-position="64">
+          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
           </folding>

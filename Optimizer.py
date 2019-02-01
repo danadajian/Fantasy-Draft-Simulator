@@ -1,4 +1,4 @@
-from itertools import combinations, permutations
+from itertools import combinations as comb
 from compilestats import *
 from getsalaries import *
 from emailresults import send_email
@@ -7,6 +7,60 @@ from emailresults import send_email
 def get_total(players, data):
     data_list = [data.get(dude) for dude in players]
     return sum(data_list)
+
+
+def optimize(score_dict, salary_dict):
+    rb_count = [3, 2, 2]
+    wr_count = [3, 4, 3]
+    te_count = [1, 1, 2]
+    best_lineup = []
+    max_points = 0
+    for n in range(3):
+        max_wr_points = max([get_total(wrs, score_dict) for wrs in list(comb(playerWRList, wr_count[n]))])
+        min_wr_salary = min([get_total(wrs, salary_dict) for wrs in list(comb(playerWRList, wr_count[n]))])
+        max_te_points = max([get_total(tes, score_dict) for tes in list(comb(playerTEList, te_count[n]))])
+        min_te_salary = min([get_total(tes, salary_dict) for tes in list(comb(playerTEList, te_count[n]))])
+        max_dst_points = max([score_dict.get(dst) for dst in playerDSTList])
+        min_dst_salary = min([salary_dict.get(dst) for dst in playerDSTList])
+        flex = ''
+        for qb in playerQBList:
+            qb_points = score_dict.get(qb)
+            qb_salary = salary_dict.get(qb)
+            for rbs in comb(playerRBList, rb_count[n]):
+                rb_points = get_total(rbs, score_dict)
+                rb_salary = get_total(rbs, salary_dict)
+                potential_max_points = qb_points + rb_points + max_wr_points + max_te_points + max_dst_points
+                potential_max_salary = qb_salary + rb_salary + min_wr_salary + min_te_salary + min_dst_salary
+                if potential_max_points > max_points and potential_max_salary <= salaryCap:
+                    for wrs in comb(playerWRList, wr_count[n]):
+                        wr_points = get_total(wrs, score_dict)
+                        wr_salary = get_total(wrs, salary_dict)
+                        potential_max_points = qb_points + rb_points + wr_points + max_te_points + max_dst_points
+                        potential_max_salary = qb_salary + rb_salary + wr_salary + min_te_salary + min_dst_salary
+                        if potential_max_points > max_points and potential_max_salary <= salaryCap:
+                            for tes in comb(playerTEList, te_count[n]):
+                                te_points = get_total(tes, score_dict)
+                                te_salary = get_total(tes, salary_dict)
+                                potential_max_points = qb_points + rb_points + wr_points + te_points + max_dst_points
+                                potential_max_salary = qb_salary + rb_salary + wr_salary + te_salary + min_dst_salary
+                                if potential_max_points > max_points and potential_max_salary <= salaryCap:
+                                    for dst in playerDSTList:
+                                        dst_points = score_dict.get(dst)
+                                        dst_salary = salary_dict.get(dst)
+                                        point_total = qb_points + rb_points + wr_points + te_points + dst_points
+                                        total_salary = qb_salary + rb_salary + wr_salary + te_salary + dst_salary
+                                        if point_total > max_points and total_salary <= salaryCap:
+                                            if rbs[2]:
+                                                flex = rbs[2]
+                                            elif wrs[3]:
+                                                flex = wrs[3]
+                                            elif tes[1]:
+                                                flex = tes[1]
+                                            best_lineup = [qb, rbs[0], rbs[1], wrs[0], wrs[1], wrs[2], tes[0], flex,
+                                                           dst]
+                                            max_points = point_total
+
+    return best_lineup
 
 
 lineupResults = ''
@@ -35,100 +89,8 @@ for playerSalaries in siteSalaries:
         else:
             print('Determining optimal FanDuel lineup...')
             salaryCap = 60000
-        bestLineup = []
-        maxPoints = 0
-        qbSalary = 0
-        rbSalary = 0
-        wrSalary = 0
-        teSalary = 0
-        dstSalary = 0
-        maxRBPoints = max([get_total(rbs, overallPlayerScoresDict) for rbs in list(combinations(playerRBList, 3))])
-        minRBSalary = min([get_total(rbs, playerSalaries) for rbs in list(combinations(playerRBList, 3))])
-        maxWRPoints = max([get_total(wrs, overallPlayerScoresDict) for wrs in list(combinations(playerWRList, 3))])
-        minWRSalary = min([get_total(wrs, playerSalaries) for wrs in list(combinations(playerWRList, 3))])
-        maxTEPoints = max([overallPlayerScoresDict.get(te) for te in playerTEList])
-        minTESalary = min([playerSalaries.get(te) for te in playerTEList])
-        maxDSTPoints = max([overallPlayerScoresDict.get(dst) for dst in playerDSTList])
-        minDSTSalary = min([playerSalaries.get(dst) for dst in playerDSTList])
-        for qb in playerQBList:
-            qbPoints = overallPlayerScoresDict.get(qb)
-            qbSalary = playerSalaries.get(qb)
-            for rbs in combinations(playerRBList, 3):
-                rbPoints = get_total(rbs, overallPlayerScoresDict)
-                rbSalary = get_total(rbs, playerSalaries)
-                potentialMaxPoints = qbPoints + rbPoints + maxWRPoints + maxTEPoints + maxDSTPoints
-                potentialMaxSalary = qbSalary + rbSalary + minWRSalary + minTESalary + minDSTSalary
-                if potentialMaxPoints > maxPoints and potentialMaxSalary <= salaryCap:
-                    for wrs in combinations(playerWRList, 3):
-                        wrPoints = get_total(wrs, overallPlayerScoresDict)
-                        wrSalary = get_total(wrs, playerSalaries)
-                        potentialMaxPoints = qbPoints + rbPoints + wrPoints + maxTEPoints + maxDSTPoints
-                        potentialMaxSalary = qbSalary + rbSalary + wrSalary + minTESalary + minDSTSalary
-                        if potentialMaxPoints > maxPoints and potentialMaxSalary <= salaryCap:
-                            for te in playerTEList:
-                                tePoints = overallPlayerScoresDict.get(te)
-                                teSalary = playerSalaries.get(te)
-                                potentialMaxPoints = qbPoints + rbPoints + wrPoints + tePoints + maxDSTPoints
-                                potentialMaxSalary = qbSalary + rbSalary + wrSalary + teSalary + minDSTSalary
-                                if potentialMaxPoints > maxPoints and potentialMaxSalary <= salaryCap:
-                                    for dst in playerDSTList:
-                                        dstPoints = overallPlayerScoresDict.get(dst)
-                                        dstSalary = playerSalaries.get(dst)
-                                        pointTotal = qbPoints + rbPoints + wrPoints + tePoints + dstPoints
-                                        totalSalary = qbSalary + rbSalary + wrSalary + teSalary + dstSalary
-                                        if pointTotal > maxPoints and totalSalary <= salaryCap:
-                                            bestLineup = [qb, rbs[0], rbs[1], wrs[0], wrs[1], wrs[2], te, rbs[2], dst]
-                                            maxPoints = pointTotal
 
-        for qb in playerQBList:
-            qbPoints = overallPlayerScoresDict.get(qb)
-            qbSalary = playerSalaries.get(qb)
-            for rbs in combinations(playerRBList, 2):
-                rbPoints = get_total(rbs, overallPlayerScoresDict)
-                rbSalary = get_total(rbs, playerSalaries)
-                if qbPoints + rbPoints + maxWRPoints + maxTEPoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + minWRSalary + minTESalary + minDSTSalary <= salaryCap:
-                    for wrs in combinations(playerWRList, 4):
-                        wrPoints = get_total(wrs, overallPlayerScoresDict)
-                        wrSalary = get_total(wrs, playerSalaries)
-                        if qbPoints + rbPoints + wrPoints + maxTEPoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + wrSalary + minTESalary + minDSTSalary <= salaryCap:
-                            for te in playerTEList:
-                                tePoints = overallPlayerScoresDict.get(te)
-                                teSalary = playerSalaries.get(te)
-                                if qbPoints + rbPoints + wrPoints + tePoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + wrSalary + teSalary + minDSTSalary <= salaryCap:
-                                    for dst in playerDSTList:
-                                        dstPoints = overallPlayerScoresDict.get(dst)
-                                        dstSalary = playerSalaries.get(dst)
-                                        pointTotal = qbPoints + rbPoints + wrPoints + tePoints + dstPoints
-                                        totalSalary = qbSalary + rbSalary + wrSalary + teSalary + dstSalary
-                                        if pointTotal > maxPoints and totalSalary <= salaryCap:
-                                            bestLineup = [qb, rbs[0], rbs[1], wrs[0], wrs[1], wrs[2], te, wrs[3], dst]
-                                            maxPoints = pointTotal
-
-        minTESalary = min([get_total(tes, playerSalaries) for tes in list(combinations(playerTEList, 2))])
-        for qb in playerQBList:
-            qbPoints = overallPlayerScoresDict.get(qb)
-            qbSalary = playerSalaries.get(qb)
-            for rbs in combinations(playerRBList, 3):
-                rbPoints = get_total(rbs, overallPlayerScoresDict)
-                rbSalary = get_total(rbs, playerSalaries)
-                if qbPoints + rbPoints + maxWRPoints + maxTEPoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + minWRSalary + minTESalary + minDSTSalary <= salaryCap:
-                    for wrs in combinations(playerWRList, 3):
-                        wrPoints = get_total(wrs, overallPlayerScoresDict)
-                        wrSalary = get_total(wrs, playerSalaries)
-                        if qbPoints + rbPoints + wrPoints + maxTEPoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + wrSalary + minTESalary + minDSTSalary <= salaryCap:
-                            for tes in combinations(playerTEList, 2):
-                                tePoints = get_total(tes, overallPlayerScoresDict)
-                                teSalary = get_total(tes, playerSalaries)
-                                if qbPoints + rbPoints + wrPoints + tePoints + maxDSTPoints > maxPoints and qbSalary + rbSalary + wrSalary + teSalary + minDSTSalary <= salaryCap:
-                                    for dst in playerDSTList:
-                                        dstPoints = overallPlayerScoresDict.get(dst)
-                                        dstSalary = playerSalaries.get(dst)
-                                        pointTotal = qbPoints + rbPoints + wrPoints + tePoints + dstPoints
-                                        totalSalary = qbSalary + rbSalary + wrSalary + teSalary + dstSalary
-                                        if pointTotal > maxPoints and totalSalary <= salaryCap:
-                                            bestLineup = [qb, rbs[0], rbs[1], wrs[0], wrs[1], wrs[2], tes[0], tes[1],
-                                                          dst]
-                                            maxPoints = pointTotal
+        bestLineup = optimize(score_dict=overallPlayerScoresDict, salary_dict=playerSalaries)
 
         # print output!
         positionOrder = ['QB', 'RB1', 'RB2', 'WR1', 'WR2', 'WR3', 'TE', 'FLEX', 'D/ST']
@@ -148,7 +110,8 @@ for playerSalaries in siteSalaries:
             playerLineup += 'Fanduel Lineup:' + '\n'
         for position, player in optimalLineup.items():
             playerLineup += str(position) + ': ' + str(player) + ' - $' + str(playerSalaries.get(player)) + '\n'
-        playerLineup += 'Total projected points: ' + str(round(maxPoints, 2)) + '\n'
+        projPoints = get_total(bestLineup, overallPlayerScoresDict)
+        playerLineup += 'Total projected points: ' + str(round(projPoints, 2)) + '\n'
         playerLineup += 'Remaining salary: ' + str(salaryCap - get_total(bestLineup, playerSalaries)) + '\n'
         playerLineup += '\n'
 
@@ -158,7 +121,7 @@ for playerSalaries in siteSalaries:
         print('No salary data available.')
 
 if lineupResults:
-    send_email(from_addr='fantasyoptimizationresults@gmail.com', to_addr_list=['danadajian@gmail.com'],
+    send_email(from_addr='fantasyoptimizationresults@gmail.com', to_addr_list=['carlyfox18@gmail.com'],
                cc_addr_list=[''], subject='Your Optimized Week ' + str(weeks + 1) + ' DFS Lineups!',
                message=lineupResults, login='fantasyoptimizationresults', password='optimize123')
 
