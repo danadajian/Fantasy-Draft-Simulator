@@ -21,18 +21,9 @@ def position_ignore(player_list, pos):
     return temp
 
 
-def position_count(player_list, pos):
-    result = [player for player in player_list if top300dict.get(player) == pos]
-    return len(result)
-
-
-def valid_choice(player, user_team):
-    if player:
-        pos_limits = {'QB': 2, 'RB': 5, 'WR': 5, 'TE': 2, 'DST': 1, 'K': 1}
-        player_pos = top300dict.get(player)
-        if position_count(user_team, player_pos) + 1 <= pos_limits.get(player_pos):
-            return True
-    return False
+def position_count(list1, list2):
+    list3 = [item for item in list1 if item in list2]
+    return len(list3)
 
 
 class draftSimulator(Tk):
@@ -232,29 +223,161 @@ class draftSimulator(Tk):
             try:
                 while draft_round < 100:  # we only want a certain number of rounds
                     for team in draft_order:
-                        if team == 'user_team':  # your pick logic
-                            if user_list:
-                                while not valid_choice(user_list[0], user_team):
-                                    user_list.remove(user_list[0])
-                                pick = user_list[0]
+                        if draft_round != 0:
+                            if team == 'user_team':  # this is your team's pick logic
+                                if len(user_qb_list) > 0 and (
+                                        (position_count(user_team, user_qb_list) == 1 and position_count(user_team,
+                                                                                                         user_rb_list) < 3 and position_count(
+                                            user_team, user_wr_list) < 3) or position_count(user_team,
+                                                                                            user_qb_list) == 2):
+                                    pick = (position_ignore(user_list, 'QB')[:1])[0]  # cases to ignore picking QB
+                                elif len(user_rb_list) > 0 and (
+                                        (position_count(user_team, user_rb_list) == 3 and position_count(user_team,
+                                                                                                         user_wr_list) < 2) or (
+                                                position_count(user_team, user_rb_list) == 4 and position_count(user_team, user_wr_list) == 2)):
+                                    pick = (position_ignore(user_list, 'RB')[:1])[0]  # cases to ignore picking RB
+                                elif len(user_wr_list) > 0 and (
+                                        (position_count(user_team, user_wr_list) == 3 and position_count(user_team,
+                                                                                                         user_rb_list) < 2) or (
+                                                position_count(user_team, user_wr_list) == 4 and position_count(user_team, user_rb_list) == 2)):
+                                    pick = (position_ignore(user_list, 'WR')[:1])[0]  # cases to ignore picking WR
+                                elif len(user_te_list) > 0 and position_count(user_team, user_te_list) == 2:
+                                    pick = position_ignore(user_list, 'TE')[:1][0]  # case to ignore picking TE
+                                elif position_count(user_team, user_qb_list) == 1 and position_count(user_team,
+                                                                                                     user_rb_list) < 4 and position_count(user_team, user_wr_list) < 4 and position_count(user_team, user_te_list) == 1:
+                                    random.sample(random.sample((user_rb_list + user_wr_list), 3),
+                                                  1)  # cases to ignore QB and TE
+                                elif position_count(user_team, user_qb_list) == 0 and len(
+                                        comp_qb_list) > 0 and draft_round > 9:  # case to pick QB
+                                    if len(user_qb_list) > 0:
+                                        pick = user_qb_list[0]
+                                    else:
+                                        pick = comp_qb_list[0]
+                                elif position_count(user_team, user_te_list) == 0 and (len(user_te_list) > 0 or len(
+                                        comp_te_list) > 0) and draft_round > 10:  # case to pick TE
+                                    if len(user_te_list) > 0:
+                                        pick = user_te_list[0]
+                                    else:
+                                        pick = comp_te_list[0]
+                                else:
+                                    pick = (user_list[:1])[0]  # pick the player at the top of your list
+                                user_team.append(pick)  # add the pick to your team
+                                if pick in user_list:
+                                    user_list.remove(pick)  # remove the player from your draft list
+                                if pick in comp_list:
+                                    comp_list.remove(pick)  # remove the player from the master list
+                                if pick in user_qb_list:
+                                    user_qb_list.remove(pick)
+                                elif pick in user_rb_list:
+                                    user_rb_list.remove(pick)
+                                elif pick in user_wr_list:
+                                    user_wr_list.remove(pick)
+                                elif pick in user_te_list:
+                                    user_te_list.remove(pick)
+                                elif pick in comp_qb_list:
+                                    comp_qb_list.remove(pick)
+                                elif pick in comp_rb_list:
+                                    comp_rb_list.remove(pick)
+                                elif pick in comp_wr_list:
+                                    comp_wr_list.remove(pick)
+                                elif pick in comp_te_list:
+                                    comp_te_list.remove(pick)
+                            else:  # this is the AI's pick logic
+                                if len(comp_qb_list) > 0 \
+                                        and ((position_count(team_dict.get(team), comp_qb_list) == 1
+                                              and position_count(team_dict.get(team), comp_rb_list) < 3
+                                              and position_count(team_dict.get(team), comp_wr_list) < 3)
+                                             or position_count(team_dict.get(team), comp_qb_list) == 2):
+                                    try:
+                                        pick = random.sample(position_ignore(comp_list, 'QB')[:threshold], 1)[
+                                            0]  # cases to ignore picking QB
+                                    except IndexError or ValueError:
+                                        pick = random.sample(position_ignore(comp_list, 'QB'),
+                                                             1)  # in case list length is below threshold
+                                elif len(comp_rb_list) > 0 and (
+                                        (position_count(team_dict.get(team), comp_rb_list) == 3 and position_count(
+                                            team_dict.get(team), comp_wr_list) < 2) or (
+                                                position_count(team_dict.get(team),
+                                                               comp_rb_list) == 4 and position_count(team_dict.get(team), comp_wr_list) == 2)):
+                                    try:
+                                        pick = random.sample(position_ignore(comp_list, 'RB')[:threshold], 1)[
+                                            0]  # cases to ignore picking RB
+                                    except IndexError or ValueError:
+                                        pick = random.sample(position_ignore(comp_list, 'RB'), 1)
+                                elif len(comp_wr_list) > 0 and (
+                                        (position_count(team_dict.get(team), comp_wr_list) == 3 and position_count(
+                                            team_dict.get(team), comp_rb_list) < 2) or (
+                                                position_count(team_dict.get(team),
+                                                               comp_wr_list) == 4 and position_count(team_dict.get(team), comp_rb_list) == 2)):
+                                    try:
+                                        pick = random.sample(position_ignore(comp_list, 'WR')[:threshold], 1)[
+                                            0]  # cases to ignore picking WR
+                                    except IndexError or ValueError:
+                                        pick = random.sample(position_ignore(comp_list, 'WR'), 1)
+                                elif len(comp_te_list) > 0 and position_count(team_dict.get(team), comp_te_list) == 2:
+                                    try:
+                                        pick = random.sample(position_ignore(comp_list, 'TE')[:threshold], 1)[
+                                            0]  # cases to ignore picking TE
+                                    except IndexError or ValueError:
+                                        pick = random.sample(position_ignore(comp_list, 'TE'), 1)
+                                    except ValueError:
+                                        try:
+                                            pick = random.sample(comp_list[:threshold], 1)[0]
+                                        except IndexError or ValueError:
+                                            pick = random.sample(comp_list, 1)
+                                elif position_count(team_dict.get(team), comp_qb_list) == 1 and position_count(
+                                        team_dict.get(team),
+                                        comp_rb_list) < 4 and position_count(
+                                    team_dict.get(team), comp_wr_list) < 4 and position_count(team_dict.get(team),
+                                                                                              comp_te_list) == 1:
+                                    random.sample(random.sample((comp_rb_list + comp_wr_list), 3), 1)
+                                elif position_count(team_dict.get(team), comp_qb_list) == 0 and len(
+                                        comp_qb_list) > 0 and draft_round > 9:
+                                    pick = random.sample(comp_qb_list, 1)  # case to pick QB
+                                elif position_count(team_dict.get(team), comp_te_list) == 0 and len(
+                                        comp_te_list) > 0 and draft_round > 10:
+                                    try:
+                                        pick = random.sample(comp_te_list[:threshold], 1)[0]  # case to pick TE
+                                    except IndexError or ValueError:
+                                        pick = random.sample(comp_te_list, 1)
+                                else:  # pick a random player from the top "threshold" players
+                                    try:
+                                        pick = random.sample(comp_list[:threshold], 1)[0]
+                                    except IndexError or ValueError:
+                                        pick = random.sample(comp_list, 1)
+                                team_dict.get(team).append(pick)  # add the pick to the comp team
+                                if pick in user_list:
+                                    user_list.remove(pick)
+                                if pick in comp_list:
+                                    comp_list.remove(pick)
+                                if pick in user_qb_list:
+                                    user_qb_list.remove(pick)
+                                elif pick in user_rb_list:
+                                    user_rb_list.remove(pick)
+                                elif pick in user_wr_list:
+                                    user_wr_list.remove(pick)
+                                elif pick in user_te_list:
+                                    user_te_list.remove(pick)
+                                elif pick in comp_qb_list:
+                                    comp_qb_list.remove(pick)
+                                elif pick in comp_rb_list:
+                                    comp_rb_list.remove(pick)
+                                elif pick in comp_wr_list:
+                                    comp_wr_list.remove(pick)
+                                elif pick in comp_te_list:
+                                    comp_te_list.remove(pick)
+                        else:  # can't check for a team having too many of one position in the first round
+                            if team == 'user_team':
+                                pick = (user_list[:1])[0]
+                                user_team.append(pick)
                                 user_list.remove(pick)
+                                comp_list.remove(pick)
                             else:
-                                comp_threshold = threshold
-                                pick = None
-                                while not valid_choice(pick, user_team):
-                                    pick = random.sample(comp_list[:threshold], 1)[0]
-                                    comp_threshold += 1
-                            user_team.append(pick)
-                            comp_list.remove(pick)
-                        else:  # AI pick logic
-                            comp_threshold = threshold
-                            while not valid_choice(pick, team_dict.get(team)):
                                 pick = random.sample(comp_list[:threshold], 1)[0]
-                                comp_threshold += 1
-                            team_dict.get(team).append(pick)
-                            if pick in user_list:
-                                user_list.remove(pick)
-                            comp_list.remove(pick)
+                                team_dict.get(team).append(pick)
+                                if pick in user_list:
+                                    user_list.remove(pick)
+                                comp_list.remove(pick)
                     print()
                     draft_order = draft_order[::-1]  # reverses the draft order for every other round
                     if draft_round % 2 == 0:
