@@ -12,6 +12,20 @@ userDraftPicks = []
 user_dict = {}
 
 
+# functions
+def position_ignore(player_list, pos):
+    if all(top300dict.get(player) == pos for player in player_list):
+        temp = player_list
+    else:
+        temp = [player for player in player_list if top300dict.get(player) != pos]
+    return temp
+
+
+def position_count(list1, list2):
+    list3 = [item for item in list1 if item in list2]
+    return len(list3)
+
+
 class draftSimulator(Tk):
 
     def __init__(self, master):
@@ -156,46 +170,42 @@ class draftSimulator(Tk):
             else:
                 self.random_checkbox.state(['selected'])
 
+        # dictionary and list creation
+        user_qb_list = [player for player, pos in user_dict.items() if pos == 'QB']
+        user_rb_list = [player for player, pos in user_dict.items() if pos == 'RB']
+        user_wr_list = [player for player, pos in user_dict.items() if pos == 'WR']
+        user_te_list = [player for player, pos in user_dict.items() if pos == 'TE']
+        comp_qb_list = [player for player, pos in top300dict.items() if pos == 'QB']
+        comp_rb_list = [player for player, pos in top300dict.items() if pos == 'RB']
+        comp_wr_list = [player for player, pos in top300dict.items() if pos == 'WR']
+        comp_te_list = [player for player, pos in top300dict.items() if pos == 'TE']
+        user_team = []
+        team_2 = []
+        team_3 = []
+        team_4 = []
+        team_5 = []
+        team_6 = []
+        team_7 = []
+        team_8 = []
+
+        rounds_drafted = 0
+
+        # determine draft order if not random
+        print(self.user_player_list.get(0, END))
+        team_dict = {'user_team': user_team, 'team_2': team_2, 'team_3': team_3, 'team_4': team_4,
+                     'team_5': team_5, 'team_6': team_6, 'team_7': team_7, 'team_8': team_8}
+        draft_order = [team for team in team_dict.keys()]
+        if self.random_checkbox.instate(['']):
+            user_pick = draft_order.index('user_team')
+            draft_order[user_pick], draft_order[pick_order - 1] = draft_order[pick_order - 1], draft_order[
+                user_pick]
+        user_draft_pick = draft_order.index('user_team')
+
         for _ in range(draft_count):
             # making player lists of each position
-            user_list = []
+            user_list = [i for i in self.user_player_list.get(0, END)]
             comp_list = [key for key in top300dict.keys()]
-            for i in self.user_player_list.get(0, END):
-                user_list.append(i)
             print(user_list)
-
-            # dictionary and list creation
-            user_qb_list = [player for player, pos in user_dict.items() if pos == 'QB']
-            user_rb_list = [player for player, pos in user_dict.items() if pos == 'RB']
-            user_wr_list = [player for player, pos in user_dict.items() if pos == 'WR']
-            user_te_list = [player for player, pos in user_dict.items() if pos == 'TE']
-            comp_qb_list = [player for player, pos in top300dict.items() if pos == 'QB']
-            comp_rb_list = [player for player, pos in top300dict.items() if pos == 'RB']
-            comp_wr_list = [player for player, pos in top300dict.items() if pos == 'WR']
-            comp_te_list = [player for player, pos in top300dict.items() if pos == 'TE']
-            user_team = []
-            team_2 = []
-            team_3 = []
-            team_4 = []
-            team_5 = []
-            team_6 = []
-            team_7 = []
-            team_8 = []
-
-            # functions
-            def position_ignore(player_list, pos):
-                temp = []
-                if all(top300dict.get(player) == pos for player in player_list):
-                    temp = player_list
-                else:
-                    for player in player_list:
-                        if top300dict.get(player) != pos:
-                            temp.append(player)
-                return temp
-
-            def position_count(list1, list2):
-                list3 = [item for item in list1 if item in list2]
-                return len(list3)
 
             # variables
             draft_round = 0
@@ -203,26 +213,16 @@ class draftSimulator(Tk):
 
             # draft starts here
             print('The draft is live!')
-            print(self.user_player_list.get(0, END))
-            # randomizes the draft order
-            team_dict = {'user_team': user_team, 'team_2': team_2, 'team_3': team_3, 'team_4': team_4,
-                         'team_5': team_5, 'team_6': team_6, 'team_7': team_7, 'team_8': team_8}
-            draft_order = [team for team in team_dict.keys()]
+
             if self.random_checkbox.instate(['selected']):
                 random.shuffle(draft_order)
-            else:
-                user_pick = draft_order.index('user_team')
-                draft_order[user_pick], draft_order[pick_order - 1] = draft_order[pick_order - 1], draft_order[
-                    user_pick]
 
-            print(draft_order)
-            team_list = draft_order
-            rounds_drafted = 0
             print()
+            pick = None
 
             try:
                 while draft_round < 100:  # we only want a certain number of rounds
-                    for team in team_list:
+                    for team in draft_order:
                         if draft_round != 0:
                             if team == 'user_team':  # this is your team's pick logic
                                 if len(user_qb_list) > 0 and (
@@ -379,7 +379,7 @@ class draftSimulator(Tk):
                                     user_list.remove(pick)
                                 comp_list.remove(pick)
                     print()
-                    team_list = team_list[::-1]  # reverses the draft order for every other round
+                    draft_order = draft_order[::-1]  # reverses the draft order for every other round
                     if draft_round % 2 == 0:
                         threshold += 2  # makes the AI choose from a larger pool of players every other round
                     draft_round += 1  # moves on to the next round
@@ -408,14 +408,14 @@ class draftSimulator(Tk):
         if self.random_checkbox.instate(['selected']):
             self.results_list.insert(END, 'The draft orders were randomized.')
         else:
-            if draft_order.index('user_team') == 0:
+            if user_draft_pick == 0:
                 self.results_list.insert(END, 'You picked 1st.')
-            elif draft_order.index('user_team') == 1:
+            elif user_draft_pick == 1:
                 self.results_list.insert(END, 'You picked 2nd.')
-            elif draft_order.index('user_team') == 2:
+            elif user_draft_pick == 2:
                 self.results_list.insert(END, 'You picked 3rd.')
             else:
-                self.results_list.insert(END, 'You picked ' + str(draft_order.index('user_team') + 1) + 'th.')
+                self.results_list.insert(END, 'You picked ' + str(user_draft_pick + 1) + 'th.')
         self.results_list.insert(END, '\n')
         self.results_list.insert(END, 'Number of rounds per draft: ' + str(rounds_drafted))
         self.results_list.insert(END, '\n')
