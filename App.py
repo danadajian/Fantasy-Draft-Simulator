@@ -1,10 +1,51 @@
 """ Fantasy Draft Simulator """
 
-from main.GetPlayers import *
+import requests
+from bs4 import BeautifulSoup
 import random
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
+
+# ranked player list that everyone drafts from
+session = requests.session()
+request = session.get('http://www.espn.com/fantasy/football/story/_/page/18RanksPreseason300nonPPR/'
+                      + '2018-fantasy-football-non-ppr-rankings-top-300')
+doc = BeautifulSoup(request.content, 'html.parser')
+text = str(doc.get_text)
+
+string = ''
+for line in text.splitlines():
+    if 'section class="col-c chk-height nocontent"' in line:
+        string = line
+
+words = string.split('<')
+
+top300List = []
+numList = list(str(range(200)))
+for word in words:
+    if 'http://www.espn.com/nfl/player/_/id/' in word:
+        name = word.split('>')
+        if 'http://' not in name:
+            top300List.append(name[1])
+    elif 'D/ST' in word:
+        dName = word.split('. ')
+        if 'td>' not in dName:
+            top300List.append(dName[1])
+    elif 'http://www.espn.com/nfl/player/_/id/' not in word and 'td>' in word and any(
+            num in word for num in numList) and '.' in word:
+        otherName = word.split('. ')
+        if 'td>' not in otherName and otherName[1] != '':
+            top300List.append(otherName[1])
+
+top300Positions = []
+posList = ['td>QB', 'td>RB', 'td>WR', 'td>TE', 'td>DST', 'td>K']
+for word in words:
+    if any(pos == word for pos in posList) and all(num not in word for num in numList):
+        position = word.split('>')
+        top300Positions.append(position[1])
+
+top300dict = dict(zip(top300List, top300Positions))
 
 userDraftPicks = []
 user_dict = {}
@@ -53,8 +94,8 @@ class draftSimulator(Tk):
 
         # lists of players and scrollbar
         self.player_list = Listbox(selectmode=MULTIPLE, activestyle='none')
-        self.player_list.grid(row=1, column=0, rowspan=10, columnspan=5, sticky=N + E + W + S, ipadx=80, ipady=50, padx=20,
-                              pady=5)
+        self.player_list.grid(row=1, column=0, rowspan=10, columnspan=5, sticky=N + E + W + S, ipadx=80, ipady=50,
+                              padx=20, pady=5)
         self.user_player_list = Listbox(selectmode=SINGLE, activestyle='none')
         self.user_player_list.grid(row=1, column=6, rowspan=10, columnspan=2, sticky=N + E + W + S, ipadx=80, ipady=50,
                                    padx=20, pady=5)
@@ -267,10 +308,6 @@ class draftSimulator(Tk):
                 draft_round += 1  # moves on to the next round
             print('Your Team: ' + str(user_team))
             userDraftPicks.append(user_team)
-            print()
-            print('Rounds drafted: ' + str(rounds_drafted))
-            print()
-            print('End of Draft')
             print('\n')
 
         # aggregate simulation data for output
