@@ -1,3 +1,2 @@
-3. add feature to save, export, and import player list ranked by preference
-4. add info section to explain how to use the app and what it does
-5. if player in results was in your list, bold them
+* add toggle filter in results box to isolate preferred players only
+* add slider to determine number of rounds to draft

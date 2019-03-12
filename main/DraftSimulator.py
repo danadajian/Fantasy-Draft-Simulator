@@ -6,6 +6,7 @@ import random
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
+from tkinter import filedialog
 
 # ranked player list that everyone drafts from
 session = requests.session()
@@ -132,22 +133,30 @@ class draftSimulator(Tk):
 
         # buttons
         self.send_button = Button(text='Select All', command=self.select_all)
-        self.send_button.grid(row=2, column=5, sticky=E + W)
-        self.send_button = Button(text='Deselect All', command=self.deselect_all)
         self.send_button.grid(row=3, column=5, sticky=E + W)
-        self.send_button = Button(text='>', command=self.choose_players)
+        self.send_button = Button(text='Deselect All', command=self.deselect_all)
         self.send_button.grid(row=4, column=5, sticky=E + W)
-        self.send_button = Button(text='<', command=self.remove_player)
+        self.send_button = Button(text='>', command=self.choose_players)
         self.send_button.grid(row=5, column=5, sticky=E + W)
-        self.send_button = Button(text='<<', command=self.remove_all)
+        self.send_button = Button(text='<', command=self.remove_player)
         self.send_button.grid(row=6, column=5, sticky=E + W)
-        self.send_button = Button(text='Import List', command=self.import_list)
+        self.send_button = Button(text='<<', command=self.remove_all)
         self.send_button.grid(row=7, column=5, sticky=E + W)
         self.random_checkbox = Checkbutton(text='Random')
         self.random_checkbox.grid(row=7, column=9, sticky=W, padx=10)
         self.random_checkbox.state(['!alternate'])
         self.draft_button = Button(text='Draft!', command=self.simulate_draft)
-        self.draft_button.grid(row=10, column=8, sticky=E + W, pady=10)
+        self.draft_button.grid(row=12, column=8, sticky=E + W, pady=10)
+
+        # # round slider
+        # self.slider_label = Label(text='')
+        # self.slider_label.grid(row=10, column=8, sticky=E + W, pady=10)
+        #
+        # def show(val):
+        #     self.slider_label.configure(text=val)
+        #
+        # self.slider = Scale(master, from_=0, to=16, orient=HORIZONTAL, length=16, command=show)
+        # self.slider.grid(row=11, column=8, sticky=E + W, pady=10)
 
         # menu
         menu = Menu(root)
@@ -155,7 +164,13 @@ class draftSimulator(Tk):
 
         file_menu = Menu(menu)
         menu.add_cascade(label='File', menu=file_menu)
-        file_menu.add_command(label='Reset', command=self.reset_all)
+        file_menu.add_command(label='Import Players...', command=self.import_players)
+        file_menu.add_command(label='Save As...', command=self.save_players)
+        file_menu.add_command(label='Reset All', command=self.reset_all)
+        file_menu.add_command(label="Quit", command=root.quit)
+        helpmenu = Menu(menu, tearoff=0)
+        menu.add_cascade(label="Help", menu=helpmenu)
+        helpmenu.add_command(label="About DraftSimulator", command=self.about_draft_simulator)
 
         for i in range(len(top300List)):
             self.player_list.insert(END, '       ' + str(top300List[i]) + '   ' + str(top300Positions[i]))
@@ -164,13 +179,6 @@ class draftSimulator(Tk):
     def choose_players(self):
         selected_players = self.player_list.curselection()
         for i in selected_players:
-            if top300List[i] not in self.user_player_list.get(0, END):
-                self.user_player_list.insert(END, str(top300List[i]))
-                user_dict.update({top300List[i]: top300Positions[i]})
-
-    def import_list(self):
-        list_to_import = (1, 2, 3, 5, 9, 8, 12, 11, 13, 15, 25, 31, 24, 42, 37, 19, 82, 43, 55, 41, 39, 60, 52, 67)
-        for i in list_to_import:
             if top300List[i] not in self.user_player_list.get(0, END):
                 self.user_player_list.insert(END, str(top300List[i]))
                 user_dict.update({top300List[i]: top300Positions[i]})
@@ -199,6 +207,52 @@ class draftSimulator(Tk):
         user_dict.clear()
         self.results_list.delete(0, END)
 
+    def save_players(self):
+        if len(self.user_player_list.get(0, END)) > 0:
+            f = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+        else:
+            messagebox.showinfo('Error', 'Please select players before saving.')
+            return
+        if f is None:  # asksaveasfile return `None` if dialog closed with "cancel".
+            return
+        user_player_list = str([player for player in self.user_player_list.get(0, END)])
+        f.write(user_player_list)
+        f.close()
+
+    def import_players(self):
+        filename = filedialog.askopenfilename(parent=root, filetypes=[("Text files", "*.txt")])
+        try:
+            f = open(filename)
+            file_text = str(f.read().split(', "'))
+            imported_list_str = file_text[3:-3].replace("'", "").replace(", ", ",")
+            imported_list = imported_list_str.split(',')
+            for player in imported_list:
+                if player not in self.user_player_list.get(0, END):
+                    self.user_player_list.insert(END, str(player))
+                    user_dict.update({player: top300dict.get(player)})
+        except FileNotFoundError:
+            return
+
+    def about_draft_simulator(self):
+        messagebox.showinfo('Welcome!',
+                            'Ever wondered how likely you are to get that fantasy stud or sleeper?  '
+                            'DraftSimulator is the tool that will give you the edge for your upcoming fantasy draft!'
+                            '\n \n'
+                            'Follow these easy steps to get started:'
+                            '\n \n'
+                            u'\u2022 First, select a group of players that you really want on your team.'
+                            '\n \n'
+                            u'\u2022 Next, rearrange them in order of preference by clicking and dragging.'
+                            '\n \n'
+                            u'\u2022 Finally, select your desired draft parameters, and click Draft!'
+                            '\n \n'
+                            "Your draft results will appear in the results box at the bottom, and will display "
+                            "how often you were able to draft each player throughout the simulation.  "
+                            "Look for the player names in red -- these are the ones you wanted!"
+                            "\n \n"
+                            "You can also save your player list and import it later!  Use File > Save and File > Import"
+                            " accordingly.")
+
     # draft function
     def simulate_draft(self):
         self.results_list.delete(0, END)
@@ -208,8 +262,8 @@ class draftSimulator(Tk):
         except ValueError:
             messagebox.showinfo('Error', 'Please specify the number of teams in your draft.')
             return
-        if team_count < 2 or team_count > 12:
-            messagebox.showinfo('Stop', 'Number of teams must be between 2 and 12. Try again.')
+        if team_count < 8 or team_count > 12:
+            messagebox.showinfo('Stop', 'Number of teams must be between 8 and 12. Try again.')
             return
 
         try:
@@ -348,14 +402,13 @@ class draftSimulator(Tk):
             else:
                 position_string = top300dict.get(key) + ' ' * 15
             self.results_list.insert(END, key_string + position_string + str(round((100.0 * value), 2)) + '%')
+            if key in self.user_player_list.get(0, END):
+                self.results_list.itemconfig(END, {'fg': 'red'})
         self.results_list.insert(END, '\n' '\n')
         userDraftPicks.clear()
         user_draft_picks_final.clear()
         draft_frequency.clear()
         messagebox.showinfo('Nice.', 'Your drafts are complete.')
-
-        # for adding import functionality:
-        # import_tuple = tuple([top300List.index(i) for i in self.user_player_list.get(0, END)])
 
 
 root = Tk()

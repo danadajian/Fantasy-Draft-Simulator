@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce507568-3544-4846-ad0e-38bad215aad8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Installation Intructions.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Fantasy-Draft-Simulator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Fantasy-Draft-Simulator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/DraftSimulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/GetPlayers.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/new ideas.txt" beforeDir="false" afterPath="$PROJECT_DIR$/new ideas.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/AppTests.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppTests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/GetPlayersTests.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,13 +16,18 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Fantasy_Draft_Simulator$App.coverage" NAME="App Coverage Results" MODIFIED="1552362557869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/Fantasy_Draft_Simulator$Unittests_for_AppTests_GetPlayersTests.coverage" NAME="Unittests for AppTests.GetPlayersTests Coverage Results" MODIFIED="1552333775496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/Fantasy_Draft_Simulator$App__1_.coverage" NAME="App (1) Coverage Results" MODIFIED="1552332176915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main/DraftSimulator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="289">
+              <caret line="158" column="65" lean-forward="true" selection-start-line="158" selection-start-column="65" selection-end-line="158" selection-end-column="65" />
               <folding>
                 <element signature="e#33#48#0" expanded="true" />
               </folding>
@@ -31,20 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/ntpath.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="178" column="24" lean-forward="true" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../venv/Scripts/Python/Lib/site-packages/PyInstaller/building/api.py">
+        <entry file="file://$PROJECT_DIR$/new ideas.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="272" selection-start-line="272" selection-end-line="272" />
+            <state relative-caret-position="15">
+              <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -60,13 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>positionstring</find>
-      <find>testTuple</find>
-      <find>def position</find>
-      <find>draft_order.index</find>
-      <find>random_checkbox</find>
-      <find>random_ch</find>
-      <find>draft_round</find>
       <find>userDr</find>
       <find>rounds_drafted</find>
       <find>draft_count</find>
@@ -85,11 +73,18 @@
       <find>user_draft_order</find>
       <find>comp_list</find>
       <find>pick</find>
-      <find>user_player_list</find>
       <find>user_list</find>
       <find>userDraft</find>
       <find>draft!</find>
       <find>print(</find>
+      <find>Reset</find>
+      <find>listbox</find>
+      <find>results_list</find>
+      <find>user_player_list</find>
+      <find>top300List</find>
+      <find>top300positions</find>
+      <find>dict</find>
+      <find>message</find>
     </findStrings>
     <replaceStrings>
       <replace>user_dict</replace>
@@ -119,26 +114,27 @@
         <option value="$PROJECT_DIR$/simulator/__init__.py" />
         <option value="$PROJECT_DIR$/guifunctions/__init__.py" />
         <option value="$PROJECT_DIR$/Fantasy Draft Simulator App.py" />
-        <option value="$PROJECT_DIR$/App.py" />
         <option value="$PROJECT_DIR$/GetPlayers.py" />
         <option value="$PROJECT_DIR$/RequestTests.py" />
-        <option value="$PROJECT_DIR$/AppTests.py" />
         <option value="$PROJECT_DIR$/main/test.py" />
-        <option value="$PROJECT_DIR$/new ideas.txt" />
         <option value="$PROJECT_DIR$/main/GetPlayers.py" />
         <option value="$PROJECT_DIR$/main/App.py" />
         <option value="$PROJECT_DIR$/tests/GetPlayersTests.py" />
         <option value="$PROJECT_DIR$/tests/AppTests.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/ntpath.py" />
+        <option value="$PROJECT_DIR$/App.py" />
+        <option value="$PROJECT_DIR$/AppTests.py" />
+        <option value="$PROJECT_DIR$/DraftSimulator.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/new ideas.txt" />
+        <option value="$PROJECT_DIR$/main/DraftSimulator.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-9" />
-    <option name="y" value="1071" />
-    <option name="width" value="1938" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="820" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -152,6 +148,11 @@
               <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
               <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Fantasy-Draft-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Fantasy-Draft-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -160,12 +161,15 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../venv/Scripts/Python/Scripts/pyinstaller.exe" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/main" />
+      <recent name="$PROJECT_DIR$/tests" />
       <recent name="C:\Users\dadajian\Documents\Personal\Fantasy-Draft-Simulator" />
       <recent name="C:\Users\dadajian\Documents\Personal\Fantasy-Draft-Simulator\main" />
       <recent name="C:\Users\dadajian\Documents\Personal\Fantasy-Draft-Simulator\tests" />
@@ -183,7 +187,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for AppTests.GetPlayersTests">
+  <component name="RunManager" selected="Python.App">
+    <configuration name="App (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fantasy-Draft-Simulator" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/DraftSimulator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="App" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Fantasy-Draft-Simulator" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -196,7 +222,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\dadajian\Documents\Personal\Fantasy-Draft-Simulator\App.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/DraftSimulator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -217,6 +244,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -235,12 +263,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;AppTests&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for AppTests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for tests.AppTests.GetPlayersTests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="Fantasy-Draft-Simulator" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -249,12 +278,13 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;AppTests&quot;" />
+      <option name="_new_target" value="&quot;tests.AppTests.GetPlayersTests&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for AppTests.GetPlayersTests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for tests.Tests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="Fantasy-Draft-Simulator" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -263,15 +293,43 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;AppTests.GetPlayersTests&quot;" />
+      <option name="_new_target" value="&quot;tests.Tests&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for tests.Tests.GetPlayersTests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="Fantasy-Draft-Simulator" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_pattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.Tests.GetPlayersTests&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.App" />
+      <item itemvalue="Python.App (1)" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python tests.Unittests for AppTests" />
+      <item itemvalue="Python tests.Unittests for tests.AppTests.GetPlayersTests" />
+      <item itemvalue="Python tests.Unittests for tests.Tests.GetPlayersTests" />
+      <item itemvalue="Python tests.Unittests for tests.Tests" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for AppTests.GetPlayersTests" />
         <item itemvalue="Python.App" />
+        <item itemvalue="Python tests.Unittests for tests.Tests.GetPlayersTests" />
+        <item itemvalue="Python tests.Unittests for tests.AppTests.GetPlayersTests" />
+        <item itemvalue="Python.App (1)" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
@@ -286,13 +344,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1550686895553</updated>
+      <workItem from="1552324872541" duration="6165000" />
+      <workItem from="1552334831274" duration="11606000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_AppTests_AppTests_test_draft_order - 2019.02.22 at 10h 24m 20s.xml">
-      <configuration name="Unittests for AppTests.AppTests.test_draft_order" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_for_AppTests_AppTests_test_draft_order - 2019.02.22 at 10h 24m 34s.xml">
       <configuration name="Unittests for AppTests.AppTests.test_draft_order" configurationId="tests" />
     </history-entry>
@@ -320,27 +377,40 @@
     <history-entry file="Unittests_for_AppTests_GetPlayersTests - 2019.03.06 at 14h 03m 49s.xml">
       <configuration name="Unittests for AppTests.GetPlayersTests" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_for_AppTests_GetPlayersTests - 2019.03.11 at 14h 49m 44s.xml">
+      <configuration name="Unittests for AppTests.GetPlayersTests" configurationId="tests" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="17771000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-5" y="1075" width="1291" height="691" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="820" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16057234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16452074" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.34736842" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34615386" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.28245613" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3122807" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.30494505" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32982457" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="R Graphics" order="3" />
+      <window_info anchor="right" id="R Packages" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="SciView" order="6" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16057234" />
@@ -362,75 +432,56 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file://$PROJECT_DIR$/guifunctions/__init__.py" />
     <entry file="file://$PROJECT_DIR$/simulator/__init__.py" />
     <entry file="file://$PROJECT_DIR$/getplayers/__init__.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="1704" selection-start-line="1704" selection-end-line="1704" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py" />
     <entry file="file://$PROJECT_DIR$/main/test.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/unittest/case.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/unittest/case.py" />
+    <entry file="file://$PROJECT_DIR$/tests/GetPlayersTests.py" />
+    <entry file="file://$PROJECT_DIR$/main/GetPlayers.py" />
+    <entry file="file://$PROJECT_DIR$/Installation Intructions.txt" />
+    <entry file="file://$PROJECT_DIR$/../venv/Scripts/Python/Lib/site-packages/PyInstaller/building/api.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/ntpath.py" />
+    <entry file="file://$PROJECT_DIR$/tests/Tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="622" selection-start-line="622" selection-end-line="622" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AppTests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/GetPlayersTests.py" />
-    <entry file="file://$PROJECT_DIR$/main/GetPlayers.py" />
-    <entry file="file://$PROJECT_DIR$/new ideas.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="34">
-            <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <first_editor relative-caret-position="90">
+            <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Installation Intructions.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../venv/Scripts/Python/Lib/site-packages/PyInstaller/building/api.py">
+    <entry file="file://$PROJECT_DIR$/new ideas.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="272" selection-start-line="272" selection-end-line="272" />
+        <state relative-caret-position="15">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App.py">
+    <entry file="file://$PROJECT_DIR$/main/DraftSimulator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="289">
+          <caret line="158" column="65" lean-forward="true" selection-start-line="158" selection-start-column="65" selection-end-line="158" selection-end-column="65" />
           <folding>
             <element signature="e#33#48#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/ntpath.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="178" column="24" lean-forward="true" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
         </state>
       </provider>
     </entry>
