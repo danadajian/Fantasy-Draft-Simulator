@@ -82,6 +82,10 @@ class draftSimulator(Tk):
         self.draft_count_label.grid(row=4, column=8, sticky=W, padx=5)
         self.draft_count = Entry()
         self.draft_count.grid(row=5, column=8, sticky=W, padx=5)
+        self.pick_order_label = Label(text='Which pick in the draft?')
+        self.pick_order_label.grid(row=6, column=8, sticky=W, padx=5)
+        self.pick_order = Entry()
+        self.pick_order.grid(row=7, column=8, sticky=W, padx=5)
         self.results_list_label = Label(text='Draft Simulation Results:')
         self.results_list_label.grid(row=12, column=0, sticky=W, padx=20)
 
@@ -160,12 +164,6 @@ class draftSimulator(Tk):
         self.team_count.grid(row=3, column=8, sticky=W, padx=5)
         self.team_count.set(10)
 
-        # self.team_count.get().trace("w", self.change_pick_slider)
-        # self.pick_order_label = Label(text='Which pick in the draft?')
-        # self.pick_order_label.grid(row=6, column=8, sticky=W, padx=5)
-        # self.pick_order = Scale(from_=1, to=self.team_count.get(), orient=HORIZONTAL)
-        # self.pick_order.grid(row=7, column=8, sticky=W, padx=5)
-
         self.round_label = Label(text='Number of rounds per draft:')
         self.round_label.grid(row=8, column=8, sticky=S+E+W)
         self.round_count = Scale(from_=1, to=16, orient=HORIZONTAL)
@@ -213,9 +211,6 @@ class draftSimulator(Tk):
             for item in full_list:
                 if item.endswith(pos):
                     self.player_list.insert(END, item)
-
-    def change_pick_slider(self):
-        self.pick_order = Scale(from_=1, to=self.team_count.get(), orient=HORIZONTAL)
 
     def choose_players(self):
         selected_players = self.player_list.curselection()
