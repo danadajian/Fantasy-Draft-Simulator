@@ -78,37 +78,42 @@ class draftSimulator(Tk):
         self.player_list_label.grid(row=0, column=0, columnspan=4, sticky=W, padx=20, pady=5)
         self.rank_list_label = Label(text='Players you want ordered by preference (drag & drop):')
         self.rank_list_label.grid(row=0, column=6, columnspan=4, sticky=W, padx=20, pady=5)
-        self.team_count_label = Label(text='Number of teams:')
-        self.team_count_label.grid(row=2, column=8, sticky=W, padx=5)
-        self.team_count = Entry()
-        self.team_count.grid(row=3, column=8, sticky=W, padx=5)
         self.draft_count_label = Label(text='Number of simulations:')
         self.draft_count_label.grid(row=4, column=8, sticky=W, padx=5)
         self.draft_count = Entry()
         self.draft_count.grid(row=5, column=8, sticky=W, padx=5)
-        self.pick_order_label = Label(text='Which pick in the draft?')
-        self.pick_order_label.grid(row=6, column=8, sticky=W, padx=5)
-        self.pick_order = Entry()
-        self.pick_order.grid(row=7, column=8, sticky=W, padx=5)
         self.results_list_label = Label(text='Draft Simulation Results:')
-        self.results_list_label.grid(row=12, column=0, sticky=E + W, padx=20, pady=10)
+        self.results_list_label.grid(row=12, column=0, sticky=W, padx=20)
 
         # lists of players and scrollbar
         self.player_list = Listbox(selectmode=MULTIPLE, activestyle='none')
-        self.player_list.grid(row=1, column=0, rowspan=10, columnspan=5, sticky=N + E + W + S, ipadx=80, ipady=50,
+        self.player_list.grid(row=2, column=0, rowspan=10, columnspan=5, sticky=N + E + W + S, ipadx=80, ipady=50,
                               padx=20, pady=5)
         self.user_player_list = Listbox(selectmode=SINGLE, activestyle='none')
         self.user_player_list.grid(row=1, column=6, rowspan=10, columnspan=2, sticky=N + E + W + S, ipadx=80, ipady=50,
                                    padx=20, pady=5)
         self.results_list = Listbox(activestyle='none', font='Monaco')
-        self.results_list.grid(row=14, column=0, rowspan=7, columnspan=10, sticky=E + W, ipady=100, padx=20, pady=10)
+        self.results_list.grid(row=14, column=0, rowspan=7, columnspan=10, sticky=E + W, ipady=100, padx=20, pady=5)
         self.left_scrollbar = Scrollbar(self.player_list, orien='vertical', command=self.player_list.yview)
         self.player_list.configure(yscrollcommand=self.left_scrollbar.set)
         self.left_scrollbar.pack(side=LEFT, fill=Y)
 
-        # self.right_scrollbar = Scrollbar(self.user_player_list, orien='vertical', command=self.user_player_list.yview)
-        # self.player_list.configure(yscrollcommand=self.right_scrollbar.set)
-        # self.right_scrollbar.pack(side=LEFT, fill=Y)
+        # search bar
+        self.search_label = Label(text='Search:')
+        self.search_label.grid(row=1, column=0, sticky=W, padx=20)
+
+        self.search_var = StringVar()
+        self.search_var.trace("w", self.update_list_search)
+        self.search_bar = Entry(textvariable=self.search_var)
+        self.search_bar.grid(row=1, column=0, sticky=W, padx=70)
+
+        # position dropdown
+        self.drop_down = StringVar()
+        positions = ['All', 'QB', 'RB', 'WR', 'TE', 'FLEX', 'DST']
+        self.drop_down.set('All')
+        self.drop_down_menu = OptionMenu(master, self.drop_down, *positions)
+        self.drop_down_menu.grid(row=1, column=0, sticky=E)
+        self.drop_down.trace("w", self.update_list_dropdown)
 
         # drag & drop!!!
         def set_current(event):
@@ -148,14 +153,24 @@ class draftSimulator(Tk):
         self.draft_button = Button(text='Draft!', command=self.simulate_draft)
         self.draft_button.grid(row=12, column=8, sticky=E + W, pady=10)
 
-        # round slider
-        self.slider_label = Label(text='Number of rounds per draft:')
-        self.slider_label.grid(row=8, column=8, sticky=S+E+W)
+        # sliders
+        self.team_count_label = Label(text='Number of teams:')
+        self.team_count_label.grid(row=2, column=8, sticky=W, padx=5)
+        self.team_count = Scale(from_=6, to=14, orient=HORIZONTAL)
+        self.team_count.grid(row=3, column=8, sticky=W, padx=5)
+        self.team_count.set(10)
 
-        self.slider = Scale(from_=1, to=16, orient=HORIZONTAL, length=16)
-        self.slider.grid(row=9, column=8, sticky=N+E+W)
-        self.slider.config(resolution=1)
-        self.slider.set(16)
+        # self.team_count.get().trace("w", self.change_pick_slider)
+        # self.pick_order_label = Label(text='Which pick in the draft?')
+        # self.pick_order_label.grid(row=6, column=8, sticky=W, padx=5)
+        # self.pick_order = Scale(from_=1, to=self.team_count.get(), orient=HORIZONTAL)
+        # self.pick_order.grid(row=7, column=8, sticky=W, padx=5)
+
+        self.round_label = Label(text='Number of rounds per draft:')
+        self.round_label.grid(row=8, column=8, sticky=S+E+W)
+        self.round_count = Scale(from_=1, to=16, orient=HORIZONTAL)
+        self.round_count.grid(row=9, column=8, sticky=N+E+W)
+        self.round_count.set(16)
 
         # menu
         menu = Menu(root)
@@ -175,6 +190,33 @@ class draftSimulator(Tk):
             self.player_list.insert(END, '       ' + str(top300List[i]) + '   ' + str(top300Positions[i]))
 
     # functions for GUI
+    def update_list_search(self, *args):
+        full_list = ['       ' + str(top300List[i]) + '   ' + str(top300Positions[i]) for i in range(len(top300List))]
+        search_term = self.search_var.get()
+        self.player_list.delete(0, END)
+        for item in full_list:
+            if search_term.lower() in item.lower():
+                self.player_list.insert(END, item)
+
+    def update_list_dropdown(self, *args):
+        full_list = ['       ' + str(top300List[i]) + '   ' + str(top300Positions[i]) for i in range(len(top300List))]
+        pos = self.drop_down.get()
+        self.player_list.delete(0, END)
+        if pos == 'All':
+            for item in full_list:
+                self.player_list.insert(END, item)
+        elif pos == 'FLEX':
+            for item in full_list:
+                if item.endswith('RB') or item.endswith('WR') or item.endswith('TE'):
+                    self.player_list.insert(END, item)
+        else:
+            for item in full_list:
+                if item.endswith(pos):
+                    self.player_list.insert(END, item)
+
+    def change_pick_slider(self):
+        self.pick_order = Scale(from_=1, to=self.team_count.get(), orient=HORIZONTAL)
+
     def choose_players(self):
         selected_players = self.player_list.curselection()
         for i in selected_players:
