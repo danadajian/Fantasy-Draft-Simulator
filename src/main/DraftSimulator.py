@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import random
 from tkinter import *
-from tkinter.ttk import *
+import tkinter.ttk as ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
@@ -91,7 +91,7 @@ class draftSimulator(Tk):
         self.pick_order = Entry()
         self.pick_order.grid(row=7, column=8, sticky=W, padx=5)
         self.results_list_label = Label(text='Draft Simulation Results:')
-        self.results_list_label.grid(row=13, column=0, sticky=E + W, padx=20, pady=10)
+        self.results_list_label.grid(row=12, column=0, sticky=E + W, padx=20, pady=10)
 
         # lists of players and scrollbar
         self.player_list = Listbox(selectmode=MULTIPLE, activestyle='none')
@@ -142,21 +142,20 @@ class draftSimulator(Tk):
         self.send_button.grid(row=6, column=5, sticky=E + W)
         self.send_button = Button(text='<<', command=self.remove_all)
         self.send_button.grid(row=7, column=5, sticky=E + W)
-        self.random_checkbox = Checkbutton(text='Random')
+        self.random_checkbox = ttk.Checkbutton(text='Random')
         self.random_checkbox.grid(row=7, column=9, sticky=W, padx=10)
         self.random_checkbox.state(['!alternate'])
         self.draft_button = Button(text='Draft!', command=self.simulate_draft)
         self.draft_button.grid(row=12, column=8, sticky=E + W, pady=10)
 
-        # # round slider
-        # self.slider_label = Label(text='')
-        # self.slider_label.grid(row=10, column=8, sticky=E + W, pady=10)
-        #
-        # def show(val):
-        #     self.slider_label.configure(text=val)
-        #
-        # self.slider = Scale(master, from_=0, to=16, orient=HORIZONTAL, length=16, command=show)
-        # self.slider.grid(row=11, column=8, sticky=E + W, pady=10)
+        # round slider
+        self.slider_label = Label(text='Number of rounds per draft:')
+        self.slider_label.grid(row=8, column=8, sticky=S+E+W)
+
+        self.slider = Scale(from_=1, to=16, orient=HORIZONTAL, length=16)
+        self.slider.grid(row=9, column=8, sticky=N+E+W)
+        self.slider.config(resolution=1)
+        self.slider.set(16)
 
         # menu
         menu = Menu(root)
@@ -302,7 +301,7 @@ class draftSimulator(Tk):
                 user_pick]
         user_draft_pick = draft_order.index('user_team')
 
-        rounds_drafted = 16
+        rounds_drafted = self.slider.get()
 
         # run simulation as many times as user specifies
         for _ in range(draft_count):
@@ -330,7 +329,7 @@ class draftSimulator(Tk):
             draft_round = 0
             threshold = 2
 
-            while any([len(team) < rounds_drafted for team in team_dict.values()]):  # we only want 16 rounds
+            while any([len(team) < rounds_drafted for team in team_dict.values()]):
                 for team in draft_order:
                     if team == 'user_team':  # your pick logic
                         if user_list:
@@ -390,17 +389,17 @@ class draftSimulator(Tk):
         self.results_list.insert(END, 'Number of rounds per draft: ' + str(rounds_drafted))
         self.results_list.insert(END, '\n')
         self.results_list.insert(END, '-' * 55)
-        self.results_list.insert(END, '    Name            Position      Draft Frequency')
+        self.results_list.insert(END, '    Name              Position          Draft Frequency')
         self.results_list.insert(END, '-' * 55)
         # print results and make it look pretty
         for key, value in sorted(draft_frequency.items(), key=lambda x: x[1], reverse=True):
-            key_string = key + ' ' * (22 - len(str(key)))
+            key_string = key[:21] + ' ' * (25 - len(str(key[:21])))
             if top300dict.get(key) == 'DST':
-                position_string = top300dict.get(key) + ' ' * 14
-            elif top300dict.get(key) == 'K':
                 position_string = top300dict.get(key) + ' ' * 16
+            elif top300dict.get(key) == 'K':
+                position_string = top300dict.get(key) + ' ' * 18
             else:
-                position_string = top300dict.get(key) + ' ' * 15
+                position_string = top300dict.get(key) + ' ' * 17
             self.results_list.insert(END, key_string + position_string + str(round((100.0 * value), 2)) + '%')
             if key in self.user_player_list.get(0, END):
                 self.results_list.itemconfig(END, {'fg': 'red'})

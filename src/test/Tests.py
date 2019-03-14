@@ -1,5 +1,5 @@
 import unittest
-from main.DraftSimulator import *
+from src.main.DraftSimulator import *
 
 
 class GetPlayersTests(unittest.TestCase):

@@ -1,2 +1,2 @@
+* add search bar for top 200 players
 * add toggle filter in results box to isolate preferred players only
-* add slider to determine number of rounds to draft
