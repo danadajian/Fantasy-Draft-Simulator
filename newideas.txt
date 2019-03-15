@@ -1,1 +1,2 @@
+* add players that were never drafted to show 0%
 * add toggle filter in results box to isolate preferred players only

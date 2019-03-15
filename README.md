@@ -6,6 +6,8 @@ Python Dependencies:
 
 To create exectuable app on Windows (Command Prompt):
 * Run in terminal in pip location:
+	* pip install cx_Freeze
+* If you encounter an error, try:
 	* pip install --upgrade git+https://github.com/anthony-tuininga/cx_Freeze.git@master
 * Alter setup.py file to contain correct paths to your Python location
 * Run in terminal in \Fantasy-Draft-Simulator:

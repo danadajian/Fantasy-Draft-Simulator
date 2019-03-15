@@ -214,14 +214,18 @@ class draftSimulator(Tk):
 
     def choose_players(self):
         selected_players = self.player_list.curselection()
-        for i in selected_players:
-            if top300List[i] not in self.user_player_list.get(0, END):
-                self.user_player_list.insert(END, str(top300List[i]))
-                user_dict.update({top300List[i]: top300Positions[i]})
+        current_players = self.player_list.get(0, END)
+        player_strings = [current_players[i].split()[0] + ' ' + current_players[i].split()[1] for i in selected_players]
+        player_names = [player for player in top300List for plyr in player_strings if player.startswith(plyr)]
+        for guy in player_names:
+            if guy not in self.user_player_list.get(0, END):
+                self.user_player_list.insert(END, guy)
+                user_dict.update({guy: top300dict.get(guy)})
 
     def remove_player(self):
         selected_players = self.user_player_list.curselection()
-        self.user_player_list.delete(selected_players)
+        if selected_players:
+            self.user_player_list.delete(selected_players)
         selection_list = [key for key in user_dict.keys()]
         for i in selected_players:
             del user_dict[selection_list[i]]
@@ -293,14 +297,11 @@ class draftSimulator(Tk):
     def simulate_draft(self):
         self.results_list.delete(0, END)
 
-        try:
-            team_count = int(self.team_count.get())
-        except ValueError:
-            messagebox.showinfo('Error', 'Please specify the number of teams in your draft.')
+        if not self.user_player_list.get(0, END):
+            messagebox.showinfo('Error', 'Please select at least one preferred player for the drafts.')
             return
-        if team_count < 8 or team_count > 12:
-            messagebox.showinfo('Stop', 'Number of teams must be between 8 and 12. Try again.')
-            return
+
+        team_count = int(self.team_count.get())
 
         try:
             draft_count = int(self.draft_count.get())
@@ -338,7 +339,7 @@ class draftSimulator(Tk):
                 user_pick]
         user_draft_pick = draft_order.index('user_team')
 
-        rounds_drafted = self.slider.get()
+        rounds_drafted = self.round_count.get()
 
         # run simulation as many times as user specifies
         for _ in range(draft_count):
@@ -378,7 +379,7 @@ class draftSimulator(Tk):
                             your_threshold = threshold
                             your_pick = None
                             while not valid_choice(your_pick, user_team):
-                                your_pick = comp_list[random.randint(0, your_threshold)]
+                                your_pick = comp_list[random.randint(0, min(len(comp_list) - 1, your_threshold))]
                                 your_threshold += 1
                         user_team.append(your_pick)
                         comp_list.remove(your_pick)
@@ -386,7 +387,7 @@ class draftSimulator(Tk):
                         comp_threshold = threshold
                         comp_pick = None
                         while not valid_choice(comp_pick, team_dict.get(team)):
-                            comp_pick = comp_list[random.randint(0, comp_threshold)]
+                            comp_pick = comp_list[random.randint(0, min(len(comp_list) - 1, comp_threshold))]
                             comp_threshold += 1
                         team_dict.get(team).append(comp_pick)
                         if comp_pick in user_list:
